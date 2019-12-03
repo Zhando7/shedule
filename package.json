@@ -1,0 +1,32 @@
+{
+  "name": "shedule",
+  "version": "1.0.0",
+  "description": "Shedule Innovation center",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env PORT=3001 node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zhando7/shedule.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zhando7/shedule/issues"
+  },
+  "homepage": "https://github.com/Zhando7/shedule#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cross-env": "^6.0.3",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  }
+}
