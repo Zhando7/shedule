@@ -4,9 +4,9 @@ const database = require('./database');
 
 database()
 .then(info => {
-    console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
+    console.log(`Connected to ${info.host}:${conf.PORT}/${info.name}`);
     app.listen(conf.PORT, () => {
-        console.log(`Web app listening localhost:${conf.PORT}`)
+        console.log(`Web app listening ${info.host}:${conf.PORT}`)
     });
 })
 .catch(() => {

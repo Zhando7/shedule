@@ -1,0 +1,19 @@
+.heading {
+    display: flex;
+    justify-content: center;
+    padding: $freeSpace;
+
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .title {
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: $silverColor;
+        text-shadow: 1.5px 1px 1px rgba($color: $blackColor, $alpha: 0.55);
+        cursor: pointer;
+    }
+}

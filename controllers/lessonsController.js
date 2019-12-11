@@ -1,0 +1,1 @@
+exports.getLessons = (req, res) => res.render('lessons');

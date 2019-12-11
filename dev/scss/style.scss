@@ -1,0 +1,22 @@
+$freeSpace: 40px;
+$sizeLesson: 270px;
+$blackColor: #000;
+$silverColor: #C0C0C0;
+$whiteColor: #fff;
+$greenColor: #3CB371;
+$boxShadow: 1px 3px 4px rgba($blackColor, 0.5);
+$urlBackground: url(../images/email-pattern.png);
+$lesBackground: url(../images/halftone-yellow.png);
+
+@import 'reset';
+@import 'grid';
+@import 'typography';
+
+body {
+    background-image: $urlBackground;
+    background-repeat: repeat;
+}
+
+@import 'header';
+@import 'main';
+@import 'footer';

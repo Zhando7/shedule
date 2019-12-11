@@ -1,0 +1,73 @@
+body {
+    font-family: 'PT Sans', Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    line-height: 1.45;
+}
+
+.heading {
+    .title {
+        font-size: 1.2em;
+    }
+}
+
+.link {
+    color: $blackColor;
+    text-decoration: none;
+}
+
+.main {
+    .grid.row {
+        .lesson {
+            font-weight: 700;
+            
+            .date {
+                text-shadow: 0.5px 0.5px 1px rgba($color: $silverColor, $alpha: 0.5);
+            }
+            .quantity {
+                color: $greenColor;
+                text-shadow: 0.5px 0.5px 1px rgba($color: $blackColor, $alpha: 0.5);
+            }
+            .date, .quantity {
+                font-size: 1.5em;
+            }
+            .date, .quantity, .show {
+                opacity: 0.65;
+            }
+        }
+    }
+
+    .grid.col {
+        .date {
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-shadow: 0.5px 0.5px 1px rgba($color: $blackColor, $alpha: 0.5);
+        }
+    }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 991px) {
+    .heading {
+        .title {
+            font-size: 0.75em;
+        }
+    }
+    
+    .main {
+        .grid.row {
+            .lesson {
+                .date, .quantity {
+                    font-size: 1.15em;
+                }
+            }
+        }
+        .grid.col {
+            .lesson {
+                .date, .quantity {
+                    font-size: 1.15em;
+                }
+            }
+        }
+    }
+}
