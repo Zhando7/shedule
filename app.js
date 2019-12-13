@@ -17,5 +17,3 @@ app.use('/lessons', lessonsRouter);
 app.use('/', homeRouter);
 
 module.exports = app;
-
-

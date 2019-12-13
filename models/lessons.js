@@ -3,7 +3,10 @@ const lessons = [
         id: 1,
         date: {
             day: 12,
-            month: 12,
+            month: {
+                number: 12,
+                title: 'декабря'
+            },
             year: 2019,
             total: 3,
             lessons: [
@@ -62,7 +65,10 @@ const lessons = [
         id: 2,
         date: {
             day: 24,
-            month: 12,
+            month: {
+                number: 12,
+                title: 'декабря'
+            },
             year: 2019,
             total: 2,
             lessons: [
@@ -105,7 +111,10 @@ const lessons = [
         id: 3,
         date: {
             day: 22,
-            month: 12,
+            month: {
+                number: 12,
+                title: 'декабря'
+            },
             year: 2019,
             total: 3,
             lessons: [
@@ -164,7 +173,10 @@ const lessons = [
         id: 4,
         date: {
             day: 26,
-            month: 12,
+            month: {
+                number: 12,
+                title: 'декабря'
+            },
             year: 2019,
             total: 3,
             lessons: [
@@ -223,7 +235,10 @@ const lessons = [
         id: 5,
         date: {
             day: 13,
-            month: 12,
+            month: {
+                number: 12,
+                title: 'декабря'
+            },
             year: 2019,
             total: 1,
             lessons: [
@@ -248,6 +263,6 @@ const lessons = [
     },
 ];
 
-exports.getLessons = (month, year) => lessons.filter( les => les.date.month == month && les.date.year == year);
+exports.getLessons = (month, year) => lessons.filter( les => les.date.month.number == month && les.date.year == year);
 
 exports.getLessonsById = id => lessons.find( les => les.id == id);

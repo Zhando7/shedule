@@ -1,4 +1,4 @@
-const moment = require('moment');
+const moment = require('../moment-conf');
 const Lessons = require('../models/lessons');
 
 exports.getIndex = (req ,res) => {
