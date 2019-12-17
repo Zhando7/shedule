@@ -1,54 +1,54 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Определяем структуры коллекции `sheduleSchema`, `lessonSchema`, `speakerSchema`, `groupSchema`
+/*  Определяем структуры коллекции 
+    `sheduleSchema`, `lessonSchema`, 
+    `speakerSchema`, `groupSchema` 
+*/
 const sheduleSchema = new Schema({
-    date: {
-        day: {
+    day: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 31
+    },
+    month: {
+        type: { type: String },
+        number: {
             type: Number,
             required: true,
             min: 1,
-            max: 31
+            max: 12
         },
-        month: {
-            number: {
-                type: Number,
-                required: true,
-                min: 1,
-                max: 12
-            },
-            title: {
-                type: String,
-                minlentgh: 5,
-                maxlentgh: 20
-            }
-        },
-        year: {
-            type: Number,
-            required: true
-        },
-        total: {
-            type: Number
-        },
-        lessons: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Lesson'
-            }
-        ]
-    }
+        title: {
+            type: String,
+            minlentgh: 5,
+            maxlentgh: 20
+        }
+    },
+    year: {
+        type: Number,
+        required: true
+    },
+    total: Number,
+    lessons: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Lesson'
+        }
+    ]
 },
-{
-    versionKey: false
-}
-);
+{ 
+    versionKey: false 
+});
 
 const lessonSchema = new Schema({
-    _id: {
+    id_shedule: {
         type: Schema.Types.ObjectId,
         ref: 'Shedule'
     },
     time_start: {
+        type: { type: String },
         hour: {
             type: Number,
             required: true,
@@ -63,6 +63,7 @@ const lessonSchema = new Schema({
         }
     },
     time_end: {
+        type: { type: String },
         hour: {
             type: Number,
             required: true,
@@ -112,7 +113,7 @@ const lessonSchema = new Schema({
 });
 
 const speakerSchema = new Schema({
-    _id: {
+    id_lesson: {
         type: Schema.Types.ObjectId,
         ref: 'Lesson'
     },
@@ -127,7 +128,7 @@ const speakerSchema = new Schema({
 });
 
 const groupSchema = new Schema({
-    _id: {
+    id_lesson: {
         type: Schema.Types.ObjectId,
         ref: 'Lesson'
     },
@@ -146,11 +147,10 @@ const Lesson = mongoose.model('Lesson', lessonSchema);
 const Speaker = mongoose.model('Speaker', speakerSchema);
 const Group = mongoose.model('Group', groupSchema);
 
-
 // возвращаем список уроков на текущий месяц
 Shedule.getLessons = (month, year) => {
     Shedule.find({
-        month: month,
+        month: { number: month },
         year: year
     }).
     populate('lesson').
