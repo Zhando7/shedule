@@ -1,11 +1,14 @@
-const moment = require('moment');
+const moment = require('../moment-conf');
+const Lessons = require('../models/lessons');
 
 exports.getIndex = (req ,res) => {
     const currentDate = {
         month: moment().format('M'),
         year: moment().format('Y')
     };
+    const data = Lessons.getLessons(currentDate.month, currentDate.year);
     
-    console.log(currentDate);
-    res.render('index');
+    res.render('index', {
+        lessons: data
+    });
 }

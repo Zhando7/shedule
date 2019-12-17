@@ -9,42 +9,19 @@
 <div class="main">
     <div class="container">
         <div class="grid row">
-            <div class="lesson">
-                <div class="date">
-                    25 декабря 2019
-                </div>
-                <div class="quantity">
-                    3 урока
-                </div>
-                <a href="/lessons" class="link show" onclick="">Смотреть</a>
-            </div>   
-            <div class="lesson">
-                <div class="date">
-                    25 декабря 2019
-                </div>
-                <div class="quantity">
-                    3 урока
-                </div>
-                <a href="/lessons" class="link show" onclick="">Смотреть</a>
-            </div> 
-            <div class="lesson">
-                <div class="date">
-                    25 декабря 2019
-                </div>
-                <div class="quantity">
-                    3 урока
-                </div>
-                <a href="/lessons" class="link show" onclick="">Смотреть</a>
-            </div> 
-            <div class="lesson">
-                <div class="date">
-                    25 декабря 2019
-                </div>
-                <div class="quantity">
-                    3 урока
-                </div>
-                <a href="/lessons" class="link show" onclick="">Смотреть</a>
-            </div> 
+            <% lessons.forEach( lesson => { %>
+                <div class="lesson">
+                    <div class="date">
+                        <%= lesson.date.day %>
+                        <%= lesson.date.month.title %>
+                        <%= lesson.date.year %>
+                    </div>
+                    <div class="quantity">
+                        <%= lesson.date.total %>
+                    </div>
+                    <a href="/lessons?id=<%= lesson.id %>" class="link show" onclick="">Смотреть</a>
+                </div>   
+            <%  }); %>
         </div>
     </div>
 </div>

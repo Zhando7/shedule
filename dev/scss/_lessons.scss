@@ -6,6 +6,7 @@
         // Стили списка уроков
         .lesson {
             animation: showLessons 1s;
+            width: $sizeLesson + 200px;
 
             .date {
                 display: flex;
