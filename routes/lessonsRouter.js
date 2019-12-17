@@ -14,6 +14,9 @@ lessonsRouter.use('/post', (req, res) => {
 
     //     console.log(doc);
     // });
+    db.Shedule.create({
+        
+    })
 });
 
 lessonsRouter.use('/', lessonsController.getLessons);
