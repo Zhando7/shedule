@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 /*  Определяем структуры коллекции 
-    `sheduleSchema`, `lessonSchema`, 
-    `speakerSchema`, `groupSchema` 
+    `sheduleSchema`, 
+    `lessonSchema`, 
+    `groupSchema` 
 */
 const sheduleSchema = new Schema({
     day: {
@@ -27,7 +28,7 @@ const sheduleSchema = new Schema({
     },
     year: {
         type: Number,
-        required: true
+        required: true,
     },
     total: Number,
     lessons: [
@@ -74,23 +75,16 @@ const lessonSchema = new Schema({
             max: 60
         }
     },
-    speakers: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Speaker'
-        }
-    ],
     title: {
         type: String,
         required: true,
         minlentgh: 3,
-        maxlentgh: 255
+        maxlentgh: 255,
     },
     desc: {
         type: String,
         minlentgh: 3,
-        maxlentgh: 255,
-        default: undefined
+        maxlentgh: 255
     },
     location: {
         type: String,
@@ -103,22 +97,12 @@ const lessonSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Group'
         }
-    ]
-},
-{
-    versionKey: false
-});
-
-const speakerSchema = new Schema({
-    id_lesson: {
-        type: Schema.Types.ObjectId,
-        ref: 'Lesson'
-    },
-    name: {
-        type: String,
+    ],
+    speakers: {
+        type: [String],
         minlentgh: 3,
         maxlentgh: 55,
-    }
+    },
 },
 {
     versionKey: false
@@ -141,7 +125,6 @@ const groupSchema = new Schema({
 
 const Shedule = mongoose.model('Shedule', sheduleSchema);
 const Lesson = mongoose.model('Lesson', lessonSchema);
-const Speaker = mongoose.model('Speaker', speakerSchema);
 const Group = mongoose.model('Group', groupSchema);
 
 // возвращаем список уроков на текущий месяц
@@ -174,6 +157,5 @@ Shedule.getLessonsById = (id) => {
 module.exports = {
     Shedule: Shedule,
     Lesson: Lesson,
-    Speaker: Speaker,
     Group: Group
 };
