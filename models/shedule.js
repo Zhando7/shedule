@@ -13,7 +13,6 @@ const sheduleSchema = new Schema({
         max: 31
     },
     month: {
-        type: { type: String },
         number: {
             type: Number,
             required: true,
@@ -48,7 +47,6 @@ const lessonSchema = new Schema({
         ref: 'Shedule'
     },
     time_start: {
-        type: { type: String },
         hour: {
             type: Number,
             required: true,
@@ -63,7 +61,6 @@ const lessonSchema = new Schema({
         }
     },
     time_end: {
-        type: { type: String },
         hour: {
             type: Number,
             required: true,
