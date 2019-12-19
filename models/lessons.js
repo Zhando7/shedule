@@ -4,7 +4,7 @@ const lessons = [
         date: {
             day: 12,
             month: {
-                number: 12,
+                number: 11,
                 title: 'декабря'
             },
             year: 2019,
@@ -66,7 +66,7 @@ const lessons = [
         date: {
             day: 24,
             month: {
-                number: 12,
+                number: 11,
                 title: 'декабря'
             },
             year: 2019,
@@ -112,7 +112,7 @@ const lessons = [
         date: {
             day: 22,
             month: {
-                number: 12,
+                number: 11,
                 title: 'декабря'
             },
             year: 2019,
@@ -174,7 +174,7 @@ const lessons = [
         date: {
             day: 26,
             month: {
-                number: 12,
+                number: 11,
                 title: 'декабря'
             },
             year: 2019,
@@ -236,7 +236,7 @@ const lessons = [
         date: {
             day: 13,
             month: {
-                number: 12,
+                number: 11,
                 title: 'декабря'
             },
             year: 2019,
