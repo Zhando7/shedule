@@ -4,7 +4,7 @@
   "description": "Shedule Innovation center",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env PORT=3000 node app.js",
+    "start": "node app.js",
     "dev": "gulp & nodemon app.js"
   },
   "repository": {
@@ -20,7 +20,7 @@
   "homepage": "https://github.com/Zhando7/shedule#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "cross-env": "^6.0.3",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "gulp": "^4.0.2",

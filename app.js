@@ -7,6 +7,7 @@ const conf = require('./config');
 const homeRouter = require('./routes/homeRouter');
 const lessonsRouter = require('./routes/lessonsRouter');
 
+// mongoose
 mongoose.Promise = global.Promise;
 mongoose.set('debug', conf.IS_PRODUCTION);
 
@@ -32,8 +33,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 */
 app.use(staticAsset(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/lessons', lessonsRouter);
-app.use('/', homeRouter);
+app.get('/lessons', lessonsRouter);
+app.get('/', homeRouter);
+
+// Ловим 404 и передаем в следующий обработчик
+app.use((req, res, next) => {
+    const err = new Error('Not found');
+    err.status = 404;
+    next(err);
+});
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    res.render('error', {
+        message: error.message,
+        error: !conf.IS_PRODUCTION ? error : {}
+    });
+});
 
 app.listen(conf.PORT, () => {
     console.log(`Web app listening on port:${conf.PORT}`)
