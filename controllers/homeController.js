@@ -1,7 +1,7 @@
 const moment = require('../moment-conf');
 const Lessons = require('../models/lessons');
 
-exports.getIndex = (req ,res) => {
+exports.getIndex = (req, res, next) => {
     const currentDate = {
         year: moment().year(),
         month: moment().month()

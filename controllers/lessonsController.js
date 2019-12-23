@@ -2,7 +2,7 @@ const moment = require('../moment-conf');
 const db = require('../models/shedule');
 const Lessons = require('../models/lessons'); // Удалить
 
-exports.getLessons = (req, res) => {
+exports.getLessons = (req, res, next) => {
     const data = Lessons.getLessonsById(req.query.id);
 
     res.render('lessons', {
@@ -10,7 +10,7 @@ exports.getLessons = (req, res) => {
     });
 }
 
-exports.postLesson = (req, res) => {
+exports.postLesson = (req, res, next) => {
     db.Shedule.create({
         day: moment().format('D'),
         month: {
@@ -20,8 +20,8 @@ exports.postLesson = (req, res) => {
         year: moment().format('YYYY'),
         total: 3,
     }, (err, doc) => {
-        if(err) return console.log(err);
-
+        if(err) return next(err);
+        
         console.log(`Сохраненный объект ${doc}`);
     });
 
