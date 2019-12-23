@@ -6,6 +6,7 @@ const staticAsset = require('static-asset');
 const conf = require('./config');
 const homeRouter = require('./routes/homeRouter');
 const lessonsRouter = require('./routes/lessonsRouter');
+const app = express();
 
 // mongoose
 mongoose.Promise = global.Promise;
@@ -21,9 +22,6 @@ mongoose.connection
 
 mongoose.connect(conf.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// express
-const app = express();
-
 app.set('view engine', 'ejs'); // Для рендеринга страниц задаем движок `ejs`
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,12 +31,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 */
 app.use(staticAsset(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Система маршрутизации
 app.get('/lessons', lessonsRouter);
 app.get('/', homeRouter);
 
 // Ловим 404 и передаем в следующий обработчик
 app.use((req, res, next) => {
-    const err = new Error('Not found');
+    const err = new Error('Not found!');
     err.status = 404;
     next(err);
 });
