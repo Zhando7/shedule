@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 /* 
     `staticAsset` используем для создания опечатков 
-    в URL закэшированных файлов 
+    в URL закэшированных статических файлов 
 */
 app.use(staticAsset(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
