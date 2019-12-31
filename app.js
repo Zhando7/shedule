@@ -8,7 +8,10 @@ const indexRouter = require('./routes/indexRouter');
 const lessonsRouter = require('./routes/lessonsRouter');
 const app = express();
 
-// mongoose
+/*
+ * Подключение к БД
+ * Start point
+ */
 mongoose.Promise = global.Promise;
 mongoose.set('debug', conf.IS_PRODUCTION);
 
@@ -21,34 +24,40 @@ mongoose.connection
     });
 
 mongoose.connect(conf.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+// End point
 
-app.set('view engine', 'ejs'); // Для рендеринга страниц задаем движок `ejs`
+app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 /* 
-    `staticAsset` используем для создания опечатков 
-    в URL закэшированных статических файлов 
+ * `staticAsset` используем для создания опечатков 
+ * в URL закэшированных статических файлов 
 */
 app.use(staticAsset(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Система маршрутизации
+/*
+ * Маршруты
+ */
 app.get('/lessons', lessonsRouter);
 app.get('/', indexRouter);
 
-// Ловим ошибку и передаем в следующий обработчик
-app.use((req, res, next) => {
-    const err = new Error('Not found!');
-    err.status = 404;
-    next(err);
+/*
+ * Ловим ошибку и передаем в следующие обработчики
+ * Start point
+ */
+app.use(function(req, res, next){
+    res.status(404);
+    res.render('error', { error: 'Not found' });
+    return;
 });
-app.use((error, req, res, next) => {
-    res.status(error.status || 500);
-    res.render('error', {
-        message: error.message,
-        error: !conf.IS_PRODUCTION ? error : {}
-    });
+app.use(function(err, req, res, next){
+    res.status(err.status || 500);
+    res.render('error', { error: err.message });
+    return;
 });
+// End point
 
 app.listen(conf.PORT, () => {
     console.log(`Web app listening on port:${conf.PORT}`)
