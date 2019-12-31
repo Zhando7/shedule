@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 const staticAsset = require('static-asset');
-const conf = require('./config');
-const indexRouter = require('./routes/indexRouter');
-const lessonsRouter = require('./routes/lessonsRouter');
-const app = express();
+const conf = require('./config/env');
+// const indexRouter = require('./routes/indexRouter');
+// const lessonRouter = require('./routes/lessonRouter');
+const monthRouter = require('./routes/monthRouter');
+const calendarRouter = require('./routes/calendarRouter');
 
+const app = express();
 /*
  * Подключение к БД
  * Start point
@@ -38,10 +40,11 @@ app.use(staticAsset(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /*
- * Маршруты
+ * Маршрутизация
  */
-app.get('/lessons', lessonsRouter);
-app.get('/', indexRouter);
+app.use('/month', monthRouter);
+// app.use('/lesson', lessonRouter);
+app.use('/', calendarRouter);
 
 /*
  * Ловим ошибку и передаем в следующие обработчики
