@@ -26,10 +26,7 @@ const sheduleSchema = new Schema({
             maxlentgh: 20
         }
     },
-    year: {
-        type: Number,
-        required: true,
-    },
+    year: { type: Number, required: true, },
     total: Number,
     lessons: [
         {

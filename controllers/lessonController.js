@@ -1,9 +1,10 @@
-const moment = require('../moment-conf');
+const moment = require('../config/moment-conf');
 const db = require('../models/shedule');
 const Lessons = require('../models/lessons'); // Удалить
 
 exports.getLessons = (req, res, next) => {
-    const data = Lessons.getLessonsById(req.query.id);
+    const data = Lessons.getLessonsById(req.params.id);
+    console.log(req.params);
 
     res.render('lessons', {
         data: data
