@@ -3,11 +3,9 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 const staticAsset = require('static-asset');
-const conf = require('./config/index');
-// const indexRouter = require('./routes/indexRouter');
-// const lessonRouter = require('./routes/lessonRouter');
-const monthRouter = require('./routes/monthRouter');
-const calendarRouter = require('./routes/calendarRouter');
+const conf = require('./config');
+const monthRouter = require('./routes/month');
+const calendarRouter = require('./routes/calendar');
 
 const app = express();
 /*
@@ -43,7 +41,6 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Маршрутизация
  */
 app.use('/month', monthRouter);
-// app.use('/lesson', lessonRouter);
 app.use('/', calendarRouter);
 
 /*
