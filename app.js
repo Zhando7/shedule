@@ -1,13 +1,9 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
-const bodyParser = require('body-parser');
-const staticAsset = require('static-asset');
-const conf = require('./config');
-const monthRouter = require('./routes/month');
-const calendarRouter = require('./routes/calendar');
+const express = require('express'),
+    mongoose = require('mongoose'),
+    app = express(),
+    conf = require('./config'),
+    middleware = require('./middleware')(app, express);
 
-const app = express();
 /*
  * Подключение к БД
  * Start point
@@ -24,39 +20,6 @@ mongoose.connection
     });
 
 mongoose.connect(conf.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-// End point
-
-app.set('view engine', 'ejs');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-/* 
- * `staticAsset` используем для создания опечатков 
- * в URL закэшированных статических файлов 
-*/
-app.use(staticAsset(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
-
-/*
- * Маршрутизация
- */
-app.use('/month', monthRouter);
-app.use('/', calendarRouter);
-
-/*
- * Ловим ошибку и передаем в следующие обработчики
- * Start point
- */
-app.use(function(req, res, next){
-    res.status(404);
-    res.render('error', { error: 'Not found' });
-    return;
-});
-app.use(function(err, req, res, next){
-    res.status(err.status || 500);
-    res.render('error', { error: err.message });
-    return;
-});
 // End point
 
 app.listen(conf.PORT, () => {
