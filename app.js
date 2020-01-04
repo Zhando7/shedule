@@ -9,8 +9,9 @@ const express = require('express'),
  * Start point
  */
 mongoose.Promise = global.Promise;
-mongoose.set('debug', conf.IS_PRODUCTION);
+mongoose.set('debug', ( conf.IS_PRODUCTION == 'prod' ) ? false : true );
 
+mongoose.connect(conf.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection
     .on('error', err => console.log(err))
     .on('close', () => console.log('Database connection closed!'))
@@ -18,8 +19,6 @@ mongoose.connection
         const info = mongoose.connections[0];
         console.log(`Connected to ${info.host}:${conf.PORT}/${info.name}`);
     });
-
-mongoose.connect(conf.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 // End point
 
 app.listen(conf.PORT, () => {

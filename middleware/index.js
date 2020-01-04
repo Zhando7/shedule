@@ -2,6 +2,7 @@ module.exports = (app, express) => {
     const path = require('path'),
         bodyParser = require('body-parser'),
         staticAsset = require('static-asset'),
+        authRouter = require('../routes/authentication'),
         monthRouter = require('../routes/month'),
         calendarRouter = require('../routes/calendar');
 
@@ -19,6 +20,7 @@ module.exports = (app, express) => {
     /*
     * Маршрутизация
     */
+    app.use('/login', authRouter);
     app.use('/month', monthRouter);
     app.use('/', calendarRouter);
 
