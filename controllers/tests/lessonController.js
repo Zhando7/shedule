@@ -1,4 +1,4 @@
-const moment = require('../config/moment-conf');
+const moment = require('../../config/moment-conf');
 const db = require('../models/shedule');
 const Lessons = require('../models/lessons'); // Удалить
 
