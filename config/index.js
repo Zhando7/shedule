@@ -7,5 +7,6 @@ dotenv.config({ path: root('../.env') });
 module.exports = {
     PORT: process.env.PORT || 3000,
     IS_PRODUCTION: process.env.NODE_ENV,
-    MONGO_URL: process.env.MONGO_URL
+    MONGO_URL: process.env.MONGO_URL,
+    SESSION_SECRET: process.env.SESSION_SECRET
 };
