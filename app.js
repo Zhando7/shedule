@@ -10,7 +10,7 @@ const express = require('express'),
  */
 mongoose.Promise = global.Promise;
 mongoose.set('debug', ( conf.IS_PRODUCTION == 'prod' ) ? false : true );
-
+console.log('ENV = ' + conf.IS_PRODUCTION);
 mongoose.connect(conf.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection
     .on('error', err => console.log(err))
