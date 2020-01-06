@@ -2,8 +2,13 @@ const express = require('express');
 const userRouter = express.Router();
 const userController = require('../controllers/user');
 
-// userRouter.get('/', userController.getIndex);
-userRouter.post('/addAdmin', userController.postSignup);
-userRouter.post('/', userController.postLogin);
+// Create admin on default
+userRouter.post('/addAdmin', userController.createAdmin);
+
+// Get index page
+userRouter.get('/', userController.getIndex);
+
+// Sign in function
+userRouter.post('/', userController.signIn);
 
 module.exports = userRouter;

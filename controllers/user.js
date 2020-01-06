@@ -1,6 +1,32 @@
 const User = require('../models/user');
 
-exports.postLogin = (req, res) => {
+exports.createAdmin = (req, res, next) => {
+    let admin = new User();
+
+    admin.name = req.body.name;
+    admin.setPassword(req.body.password);
+
+    admin.save((err, doc) => {
+        if(err) {
+            return res.status(400).send({
+                message: 'Failed to add user'
+            });
+        }
+        else {
+            req.session.userId = admin._id;
+            req.session.login = admin.name;
+            return res.status(201).send({
+                message: 'Admin added successfully'
+            });
+        }
+    });
+}
+
+exports.getIndex = (req, res) => {
+    res.render('login');
+}
+
+exports.signIn = (req, res) => {
     User.findOne({ 'name': req.body.name }, (err, doc) => {
         if(doc === null) {
             return res.status(400).send({
@@ -22,26 +48,5 @@ exports.postLogin = (req, res) => {
             }
         }
     });
-}
-
-exports.postSignup = (req, res, next) => {
-    let admin = new User();
-
-    admin.name = req.body.name;
-    admin.setPassword(req.body.password);
-
-    admin.save((err, doc) => {
-        if(err) {
-            return res.status(400).send({
-                message: 'Failed to add user'
-            });
-        }
-        else {
-            req.session.userId = admin._id;
-            req.session.login = admin.name;
-            return res.status(201).send({
-                message: 'Admin added successfully'
-            });
-        }
-    });
+    res.redirect('index');
 }
