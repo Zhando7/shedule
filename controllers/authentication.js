@@ -1,10 +1,14 @@
 const User = require('../models/user');
 
-exports.createAdmin = (req, res, next) => {
+exports.getIndex = (req, res) => {
+    res.render('login');
+}
+
+exports.createAdmin = (req, res) => {
     let admin = new User();
 
-    admin.name = req.body.name;
-    admin.setPassword(req.body.password);
+    admin.name = 'root_2';
+    admin.setPassword('root_2');
 
     admin.save((err, doc) => {
         if(err) {
@@ -13,17 +17,11 @@ exports.createAdmin = (req, res, next) => {
             });
         }
         else {
-            req.session.userId = admin._id;
-            req.session.login = admin.name;
             return res.status(201).send({
                 message: 'Admin added successfully'
             });
         }
     });
-}
-
-exports.getIndex = (req, res) => {
-    res.render('login');
 }
 
 exports.signIn = (req, res) => {
@@ -35,8 +33,9 @@ exports.signIn = (req, res) => {
         }
         else {
             if(doc.validPassword(req.body.password)) {
-                req.session.userId = admin._id;
-                req.session.login = admin.name;
+                req.session.userId = doc._id;
+                req.session.login = doc.name;
+
                 return res.status(201).send({
                     message: 'User Logged In'
                 });
@@ -48,5 +47,5 @@ exports.signIn = (req, res) => {
             }
         }
     });
-    res.redirect('index');
+    // res.redirect('/');
 }
