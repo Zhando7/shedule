@@ -6,9 +6,9 @@ document.getElementById("submit").addEventListener("click", function (e) {
    let loginForm = document.forms["loginForm"];
    let userName = loginForm.elements["userName"].value;
    let userPassword = loginForm.elements["userPassword"].value;
-   console.log(userName, userPassword);
+
    // сериализуем данные в json
-   let user = JSON.stringify({userName: userName, userPassword: userPassword});
+   let user = JSON.stringify({name: userName, password: userPassword});
 
    let xhr = new XMLHttpRequest();
    // посылаем запрос на адрес "/login"

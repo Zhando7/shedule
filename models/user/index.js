@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const raw = require('./schema.json');
 
 // create a schema
-const userSchema = Schema(raw);
+const userSchema = Schema(raw, { versionKey: false });
 
 userSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(15).toString('hex');
