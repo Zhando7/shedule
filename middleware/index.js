@@ -6,12 +6,18 @@ module.exports = (app, express) => {
             staticAsset = require('static-asset'),
             
             mongoose = require('../utils/mongoose'),
+            admin = require('./admin'),
             session = require('express-session'),
             MongoStore = require('connect-mongo')(session),
 
             authRouter = require('../routes/authentication'),
             monthRouter = require('../routes/month'),
             indexRouter = require('../routes');
+
+    /*
+    * Creating admin on default
+    */
+    admin.createAdmin();
 
     /*
     * Page rendering
@@ -22,20 +28,20 @@ module.exports = (app, express) => {
     * Requests parser
     */
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+    // app.use(bodyParser.urlencoded({ extended: true }));
 
     /* 
     * `staticAsset` используем для создания опечатков 
     * в URL закэшированных статических файлов 
     */
-    app.use(staticAsset(path.join(__dirname, '../public')));
     app.use(express.static(path.join(__dirname, '../public')));
+    app.use(staticAsset(path.join(__dirname, '../public')));
 
     /*
     * Session
     */
     app.use(session({
-        secret: conf.session.SESSION_SECRET,
+        secret: conf.session.secret,
         resave: false,
         saveUninitialized: true,
         cookie: conf.session.cookie,

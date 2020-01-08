@@ -9,12 +9,16 @@ module.exports = {
     IS_PRODUCTION: process.env.NODE_ENV,
     MONGO_URL: process.env.MONGO_URL,
     session: {
-        SESSION_SECRET: process.env.SESSION_SECRET,
+        secret: process.env.SESSION_SECRET,
         cookie: {
             originalMaxAge: null,
             httpOnly: true,
-            path: "/",
+            path: '/',
             expires: null
         }
+    },
+    admin: {
+        name: process.env.ADMIN_NAME,
+        password: process.env.ADMIN_PASSWORD
     }
 };

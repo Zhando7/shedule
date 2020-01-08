@@ -1,12 +1,12 @@
 mongoose = require('mongoose'),
 conf = require('../config'),
 /*
- * Подключение к БД
+ * Database connection
  */
 mongoose.Promise = global.Promise;
 mongoose.set('debug', ( conf.IS_PRODUCTION === 'prod' ) ? false : true );
 
-mongoose.connect(conf.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(conf.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.connection
     .on('error', err => console.log(err))
     .on('close', () => console.log('Database connection closed!'))
