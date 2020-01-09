@@ -42,10 +42,15 @@ module.exports = (app, express) => {
     */
     app.use(session({
         secret: conf.session.secret,
-        resave: false,
-        saveUninitialized: true,
+        resave: true,  //don't save session if unmodified
+        saveUninitialized: false,   // A session that is "uninitialized" to be saved to the store
         cookie: conf.session.cookie,
-        store: new MongoStore({ mongooseConnection: mongoose.connection })
+        store: new MongoStore({ 
+            mongooseConnection: mongoose.connection,
+            ttl: 24 * 3600,
+            autoRemove: 'native',
+            touchAfter: 3600
+        })
     }));
 
     /*

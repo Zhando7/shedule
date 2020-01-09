@@ -29,3 +29,13 @@ exports.signIn = (req, res) => {
     });
     // res.redirect('/');
 }
+
+exports.logOut = (req, res) => {
+    req.session.destroy((err) => {
+        console.log(err);
+        res.status(401).send({
+            message: 'Cannot access session'
+        });
+    });
+    res.redirect('/');
+}
