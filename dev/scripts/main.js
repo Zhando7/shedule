@@ -12,13 +12,23 @@ document.getElementById("submit").addEventListener("click", function (e) {
 
    let xhr = new XMLHttpRequest();
    // посылаем запрос на адрес "/login"
-   xhr.open("POST", "/login", true);   
+   xhr.open("POST", "/auth/login", true);   
    xhr.setRequestHeader("Content-Type", "application/json");
    xhr.addEventListener("load", function () {
        // получаем и парсим ответ сервера
         let received = JSON.parse(xhr.response);
-        // console.log(receivedUser.userName, "-", receivedUser.userPassword);   // смотрим ответ сервера
-        console.log(received.message);
+        console.log(received.msg);
     });
     xhr.send(user);
 });
+
+function logout() {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/auth/logout", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.addEventListener("load", function () {
+        let received = JSON.parse(xhr.response);
+        console.log(received.msg);
+    });
+    xhr.send();
+}

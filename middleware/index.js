@@ -56,7 +56,7 @@ module.exports = (app, express) => {
     /*
     * Routing
     */
-    app.use('/login', authRouter);
+    app.use('/auth', authRouter);
     app.use('/month', monthRouter);
     app.use('/', indexRouter);
 

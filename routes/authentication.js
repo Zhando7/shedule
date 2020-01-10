@@ -6,7 +6,7 @@ const authController = require('../controllers/authentication');
 authRouter.use('/logout', authController.logOut);
 
 // sign in
-authRouter.post('/', authController.signIn);
+authRouter.post('/login', authController.logIn);
 
 // Get index page
 authRouter.get('/', authController.getIndex);

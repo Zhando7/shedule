@@ -4,11 +4,11 @@ exports.getIndex = (req, res) => {
     res.render('login');
 }
 
-exports.signIn = (req, res) => {
+exports.logIn = (req, res) => {
     User.findOne({ 'name': req.body.name }, (err, doc) => {
         if(doc === null) {
-            return res.status(400).send({
-                message: 'User not found'
+            return res.status(400).json({
+                msg: 'User not found'
             });
         }
         else {
@@ -16,13 +16,13 @@ exports.signIn = (req, res) => {
                 req.session.userId = doc._id;
                 req.session.userLogin = doc.name;
 
-                return res.status(201).send({
-                    message: 'User Logged In'
+                return res.status(200).json({
+                    msg: 'User Logged In'
                 });
             }
             else {
-                return res.status(400).send({
-                    message: 'Wrong password'
+                return res.status(400).json({
+                    msg: 'Wrong password'
                 });
             }
         }
@@ -32,10 +32,14 @@ exports.signIn = (req, res) => {
 
 exports.logOut = (req, res) => {
     req.session.destroy((err) => {
-        console.log(err);
-        res.status(401).send({
-            message: 'Cannot access session'
+        if(err) {
+            return res.status(400).json({
+                msg: 'Cannot access session'
+            });
+        }
+        return res.status(200).json({
+            msg: 'Logged out'
         });
     });
-    res.redirect('/');
+    
 }
