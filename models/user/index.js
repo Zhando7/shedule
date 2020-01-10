@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
 const Schema = mongoose.Schema;
+const crypto = require('crypto');
 
 // parse json
 const raw = require('./schema.json');
