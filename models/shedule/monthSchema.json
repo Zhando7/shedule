@@ -13,6 +13,5 @@
             "trim": true
         }
     },
-    "year": { "type": "Number", "required": true },
-    "total": "Number"
+    "year": { "type": "Number", "required": true }
 }
