@@ -27,7 +27,6 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "gulp": "^4.0.2",
-    "moment": "^2.24.0",
     "mongoose": "^5.7.13",
     "static-asset": "^0.6.0"
   },
