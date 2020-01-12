@@ -10,6 +10,7 @@ module.exports = (app, express) => {
             session = require('express-session'),
             MongoStore = require('connect-mongo')(session),
 
+            adminRouter = require('../routes/admin'),
             authRouter = require('../routes/authentication'),
             monthRouter = require('../routes/month'),
             indexRouter = require('../routes');
@@ -28,7 +29,7 @@ module.exports = (app, express) => {
     * Requests parser
     */
     app.use(bodyParser.json());
-    // app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     /* 
     * `staticAsset` используем для создания опечатков 
@@ -56,6 +57,7 @@ module.exports = (app, express) => {
     /*
     * Routing
     */
+    app.use('/admin', adminRouter);
     app.use('/auth', authRouter);
     app.use('/month', monthRouter);
     app.use('/', indexRouter);
