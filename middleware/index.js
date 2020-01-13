@@ -6,13 +6,13 @@ module.exports = (app, express) => {
             staticAsset = require('static-asset'),
             
             mongoose = require('../utils/mongoose'),
-            admin = require('./admin'),
+            admin = require('../utils/admin'),
             session = require('express-session'),
             MongoStore = require('connect-mongo')(session),
+            checkAuth = require('./checkAuth'),
 
             adminRouter = require('../routes/admin'),
             authRouter = require('../routes/authentication'),
-            monthRouter = require('../routes/month'),
             indexRouter = require('../routes');
 
     /*
@@ -57,9 +57,8 @@ module.exports = (app, express) => {
     /*
     * Routing
     */
-    app.use('/admin', adminRouter);
+    app.use('/admin', checkAuth, adminRouter);
     app.use('/auth', authRouter);
-    app.use('/month', monthRouter);
     app.use('/', indexRouter);
 
     /*
