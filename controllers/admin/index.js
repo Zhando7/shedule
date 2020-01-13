@@ -7,6 +7,6 @@ module.exports = {
     day: day,
     lesson: lesson,
     getIndex: (req, res) => {
-        res.status(200).send('This is admin page!');
+        res.render('admin');
     }
 }
