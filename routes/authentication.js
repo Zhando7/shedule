@@ -2,13 +2,12 @@ const express = require('express');
 const authRouter = express.Router();
 const authController = require('../controllers/authentication');
 
-// logout 
+// Get index page 
 authRouter.get('/logout', authController.logOut);
+authRouter.get('/login', authController.getIndex);
 
-// login
+// Post data
 authRouter.post('/login', authController.logIn);
 
-// Get index page
-authRouter.get('/login', authController.getIndex);
 
 module.exports = authRouter;
