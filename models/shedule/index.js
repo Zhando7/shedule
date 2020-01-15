@@ -16,8 +16,8 @@ const   Month = mongoose.model('Months', monthSchema),
         Day = mongoose.model('Days', daySchema),
         Lesson = mongoose.model('Lessons', lessonSchema);
 
-module.exports = [{
+module.exports = {
     Month: Month,
     Day: Day,
     Lesson: Lesson
-}];
+};

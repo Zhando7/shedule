@@ -9,7 +9,7 @@ adminRouter.post('/lessons', adminController.lesson.createLesson);
 
 // Read index, month, day, lessons
 adminRouter.get('/', adminController.getIndex);
-adminRouter.get('/month', adminController.month.getMonth);
+adminRouter.get('/month/:id', adminController.month.getMonth);
 adminRouter.get('/day/:id', adminController.day.getDay);
 adminRouter.get('/lessons/:id', adminController.lesson.getLesson);
 

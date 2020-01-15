@@ -57,7 +57,8 @@ module.exports = (app, express) => {
     /*
     * Routing
     */
-    app.use('/admin', checkAuth, adminRouter);
+    // app.use('/admin', checkAuth, adminRouter);
+    app.use('/admin', adminRouter);
     app.use('/auth', authRouter);
     app.use('/', indexRouter);
 
