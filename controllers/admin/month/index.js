@@ -24,7 +24,7 @@ exports.createMonth = (req, res) => {
             });
         }
         return res.status(200).json({
-            msg: 'Data is saved!'
+            msg: 'Document saved!'
         });
     });
 }
@@ -32,10 +32,10 @@ exports.createMonth = (req, res) => {
 exports.getMonth = (req, res) => {
     const id = req.params.id;
     
-    Shedule.Month.findById(id, (err, doc) => {
+    Shedule.Month.findById(id, (err) => {
         if(err) {
             return res.status(400).json({
-                msg: 'The request parameter is not found'
+                msg: 'Document not found'
             });
         }
         Shedule.Day.find({ id_month: id }, (err, docs) => {
@@ -45,7 +45,7 @@ exports.getMonth = (req, res) => {
                 })
             }
             return res.status(200).json({
-                msg: 'The id_month have found',
+                msg: 'Document founded',
                 docs: docs
             });
         })
@@ -55,41 +55,58 @@ exports.getMonth = (req, res) => {
 exports.updateMonth = (req, res) => {
     if(!req.body) return res.status(400).json({
         msg: 'The request body is null'
-    });;
-
+    });
     const id = req.body.id;
     const number = req.body.number;
     const title = req.body.title;
     const year = req.body.year;
 
-    Shedule.Month.updateOne({ id: id }, (err, doc) => {
+    Shedule.Month.updateOne({ _id: id }, {
+        month: {
+            number: number,
+            title: title
+        },
+        year: year
+    }, (err, doc) => {
         if(err) {
             return res.status(400).json({
-                msg: 'Data do not update'
+                msg: 'Document do not update'
             });
         }
-        console.log(doc);
-        doc.month.number = number;
-        doc.month.title = title;
-        doc.year = year;
-        doc.save((err) => {
-            if(err) {
-                return res.status(400).json({
-                    msg: 'Document do not save'
-                });
-            }
-            res.status(200).json({
-                msg: 'Data is updated',
-                doc: doc
-            })
+        return res.status(200).json({
+            msg: 'Document saved',
+            doc: doc
         });
     });
 }
 
 exports.deleteMonth = (req, res) => {
+    const id = req.params.id;
 
+    Shedule.Month.deleteOne({ _id: id }, (err) => {
+        if(err) {
+            return res.status(400).json({
+                msg: 'Document not found'
+            });
+        }
+        return res.status(200).json({
+            msg: 'Document deleted'
+        });
+    });
 }
 
 exports.selectMonth = (req, res) => {
+    const id = req.params.id;
 
+    Shedule.Month.findById(id, (err, doc) => {
+        if(err) {
+            return res.status(400).json({
+                msg: 'Document not found'
+            });
+        }
+        return res.status(200).json({
+            msg: 'Document found',
+            doc: doc
+        });
+    });
 }

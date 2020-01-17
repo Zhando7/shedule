@@ -1,6 +1,6 @@
 {
     "id_month": { "type": "ObjectId", "required": true },
-    "day": {
+    "number": {
         "type": "Number",
         "required": true,
         "min": 1,
