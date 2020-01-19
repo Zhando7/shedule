@@ -11,7 +11,6 @@ adminRouter.post('/lessons', adminController.lesson.createLesson);
 adminRouter.get('/', adminController.getIndex);
 adminRouter.get('/month/:id', adminController.month.getMonth);
 adminRouter.get('/day/:id', adminController.day.getDay);
-// adminRouter.get('/lessons/:id', adminController.lesson.getLesson);
 
 // Update month, day, lesson
 adminRouter.put('/month', adminController.month.updateMonth);

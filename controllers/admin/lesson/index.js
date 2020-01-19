@@ -43,10 +43,6 @@ exports.createLesson = (req, res) => {
     });
 }
 
-exports.getLesson = (req, res) => {
-
-}
-
 exports.updateLesson = (req, res) => {
     if(!req.body) return res.status(400).json({
         msg: 'The request body is null'
