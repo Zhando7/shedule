@@ -1,6 +1,8 @@
 module.exports = (req, res, next) => {
     if(!req.session.userId) {
-        res.send('You are not admin!');
+        res.status(401).json({
+            msg: 'You unauthorized!'
+        });
     } else {
         next();
     }

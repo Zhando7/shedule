@@ -7,7 +7,7 @@ exports.getIndex = (req, res) => {
 exports.logIn = (req, res) => {
     User.findOne({ 'name': req.body.name }, (err, doc) => {
         if(doc === null) {
-            return res.status(400).json({
+            return res.status(200).json({
                 msg: 'User not found'
             });
         }
