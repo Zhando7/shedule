@@ -35,7 +35,7 @@ exports.getYear = (req, res) => {
         Shedule.Month.find({ id_year: id }, (err, docs) => {
             if(err) {
                 return res.status(400).json({
-                    msg: ''
+                    msg: 'The id_year is not found'
                 })
             }
             return res.status(200).json({
