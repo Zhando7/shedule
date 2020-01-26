@@ -48,6 +48,7 @@ exports.updateLesson = (req, res) => {
         msg: 'The request body is null'
     });;
 
+    const id = req.body.id;
     const id_day = req.body.id_day;
     const time_start = {
         hour: req.body.time_start.hour,

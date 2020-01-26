@@ -6,13 +6,11 @@ exports.createDay = (req, res) => {
     });;
 
     const id_month = req.body.id_month;
-    const number = req.body.number;
-    const weekday = req.body.weekday;
+    const full_date = req.body.full_date;
 
     const day = new Shedule.Day({
         id_month: id_month,
-        number: number,
-        weekday: weekday
+        full_date: full_date
     });
 
     day.save((err) => {
@@ -57,13 +55,11 @@ exports.updateDay = (req, res) => {
 
     const id = req.body.id;
     const id_month = req.body.id_month;
-    const number = req.body.number;
-    const weekday = req.body.weekday;
+    const full_date = req.body.full_date;
 
     Shedule.Day.updateOne({ _id: id }, {
         id_month: id_month,
-        number: number,
-        weekday: weekday
+        full_date: full_date
     }, (err, doc) => {
         if(err) {
             return res.status(400).json({

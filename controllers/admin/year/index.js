@@ -1,23 +1,17 @@
 const Shedule = require('../../../models/shedule');
 
-exports.createMonth = (req, res) => {
+exports.createYear = (req, res) => {
     if(!req.body) return res.status(400).json({
         msg: 'The request body is null'
-    });;
-
-    const id_year = req.body.id_year;
-    const number = req.body.number;
-    const title = req.body.title;
-
-    const month = new Shedule.Month({
-        id_year: id_year,
-        month: {
-            number: number,
-            title: title
-        }
     });
 
-    month.save((err) => {
+    const newYear = req.body.year;
+
+    const year = new Shedule.Year({
+        year: newYear
+    });
+
+    year.save((err) => {
         if(err) {
             return res.status(400).json({
                 msg: 'Cannot save data'
@@ -25,23 +19,23 @@ exports.createMonth = (req, res) => {
         }
         return res.status(200).json({
             msg: 'Document saved!'
-        });
-    });
+        })
+    })
 }
 
-exports.getMonth = (req, res) => {
-    const id = req.params.id;
-    
-    Shedule.Month.findById(id, (err) => {
+exports.getYear = (req, res) => {
+    const id = req.param.id;
+
+    Shedule.Year.findById(id, (err) => {
         if(err) {
             return res.status(400).json({
                 msg: 'Document not found'
-            });
+            })
         }
-        Shedule.Day.find({ id_month: id }, (err, docs) => {
+        Shedule.Month.find({ id_year: id }, (err, docs) => {
             if(err) {
                 return res.status(400).json({
-                    msg: 'The id_month is not found'
+                    msg: ''
                 })
             }
             return res.status(200).json({
@@ -49,23 +43,19 @@ exports.getMonth = (req, res) => {
                 docs: docs
             });
         })
-    });
+    })
 }
 
-exports.updateMonth = (req, res) => {
+exports.updateYear = (req, res) => {
     if(!req.body) return res.status(400).json({
         msg: 'The request body is null'
     });
 
     const id = req.body.id;
-    const number = req.body.number;
-    const title = req.body.title;
+    const newYear = req.body.year;
 
-    Shedule.Month.updateOne({ _id: id }, {
-        month: {
-            number: number,
-            title: title
-        }
+    Shedule.Year.updateOne({ _id: id }, {
+        year: newYear
     }, (err, doc) => {
         if(err) {
             return res.status(400).json({
@@ -76,13 +66,13 @@ exports.updateMonth = (req, res) => {
             msg: 'Document saved',
             doc: doc
         });
-    });
+    })
 }
 
-exports.deleteMonth = (req, res) => {
+exports.deleteYear = (req, res) => {
     const id = req.params.id;
 
-    Shedule.Month.deleteOne({ _id: id }, (err) => {
+    Shedule.Year.deleteOne({ _id: id }, (err) => {
         if(err) {
             return res.status(400).json({
                 msg: 'Document not found'
@@ -94,10 +84,10 @@ exports.deleteMonth = (req, res) => {
     });
 }
 
-exports.selectMonth = (req, res) => {
+exports.selectYear = (req, res) => {
     const id = req.params.id;
 
-    Shedule.Month.findById(id, (err, doc) => {
+    Shedule.Year.findById(id, (err, doc) => {
         if(err) {
             return res.status(400).json({
                 msg: 'Document not found'
