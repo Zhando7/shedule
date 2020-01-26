@@ -77,12 +77,14 @@ let docs = [
 ];
 
 function createCalendar(elem, docs) {
-    let j = 0;
-    let firstDay = docs[0].date.getDay();
-    let table = '<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
+    let table = '<table><thead><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th></tr></thead><tbody><tr>',
+        firstDay = docs[0].date.getDay(),
+        j = 0;
 
-    // пробелы для первого ряда
-    // с понедельника до первого дня месяца
+    /*
+    * Пробелы для первого ряда
+    * с понедельника до первого дня месяца
+    */
     for( let i = 1; i < firstDay; i++ ) {
         table += '<td></td>';
         console.log('Пустые ячейки');
@@ -91,19 +93,16 @@ function createCalendar(elem, docs) {
     // <td> ячейки календаря с датами
     while( j < docs.length ) {
         table += "<td>" + docs[j].date.getDate() + "</td>";
-        
-        console.log(docs[j].date.getDate());
 
         if( docs[j].date.getDay() == 6 /* && j < ( docs.length - 1) */ ) {
-            console.log('Новый ряд');
-            table += "</tr><tr>";
+            table += "</tr><tr>";   // новый ряд
         }
-
+        
         j++;
     }
-    console.log('THE END');
-    table += "</tr></table>";
-    // elem.innerHtml = table;
+
+    table += "</tr></tbody></table>";
+    elem.innerHtml = table;
 }
 
-createCalendar(null, docs);
+createCalendar(calendar, docs);
