@@ -1,15 +1,7 @@
 {
     "id_month": { "type": "ObjectId", "required": true },
-    "number": {
-        "type": "Number",
-        "required": true,
-        "min": 1,
-        "max": 31
-    },
-    "weekday": {
-        "type": "Number",
-        "required": true,
-        "min": 1,
-        "max": 6
+    "fullDate": {
+        "type": "Date",
+        "required": true
     }
 }
