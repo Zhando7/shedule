@@ -49,7 +49,6 @@ exports.updateLesson = (req, res) => {
     });;
 
     const id = req.body.id;
-    const id_day = req.body.id_day;
     const time_start = {
         hour: req.body.time_start.hour,
         minutes: req.body.time_start.minutes
@@ -62,7 +61,6 @@ exports.updateLesson = (req, res) => {
     const desc = req.body.desc;
 
     Shedule.Lesson.updateOne({ _id: id }, {
-        id_day: id_day,
         time_start: {
             hour: time_start.hour,
             minutes: time_start.minutes

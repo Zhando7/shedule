@@ -54,13 +54,9 @@ exports.updateDay = (req, res) => {
     });
 
     const id = req.body.id;
-    const id_month = req.body.id_month;
     const full_date = req.body.full_date;
 
-    Shedule.Day.updateOne({ _id: id }, {
-        id_month: id_month,
-        full_date: full_date
-    }, (err, doc) => {
+    Shedule.Day.updateOne({ _id: id }, { full_date: full_date }, (err, doc) => {
         if(err) {
             return res.status(400).json({
                 msg: 'Document do not update'
