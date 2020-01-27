@@ -1,1 +1,17 @@
-<%- include("layout/header"); %>
+<%- include("layout/header.ejs"); %>
+
+<div class="main">
+    <div class="container">
+        <div class="grid row">
+            <form name="formCreateDay">
+                <label for="full_date">Дата</label>
+                <input type="date" name="full_date">
+                <br>
+                <button class="waves-effect waves-light btn" type="submit" id="submitDay">Sign in</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="<%= assetFingerprint('/javascripts/main.min.js') %>"></script>
+<%- include("layout/footer.ejs"); %>
