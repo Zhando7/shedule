@@ -24,8 +24,8 @@ exports.createYear = (req, res) => {
 }
 
 exports.getYear = (req, res) => {
-    const id = req.param.id;
-
+    const id = req.params.id;
+    
     Shedule.Year.findById(id, (err) => {
         if(err) {
             return res.status(400).json({
