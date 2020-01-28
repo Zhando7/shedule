@@ -37,9 +37,7 @@ exports.logOut = (req, res) => {
                 msg: 'Cannot access session'
             });
         }
-        return res.status(200).json({
-            msg: 'Logged out'
-        });
+        res.redirect('/');
     });
     
 }
