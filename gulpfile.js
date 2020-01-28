@@ -12,7 +12,7 @@ var path = {
         dest: './public/stylesheets/'
     },
     scripts: {
-        src: './dev/scripts/**/*.js',
+        src: [ './dev/scripts/*.js', './dev/scripts/admin/*.js' ],
         dest: './public/javascripts/'
     }
 };
@@ -28,7 +28,7 @@ function styles() {
 
 function scripts() {
     return gulp
-    .src(path.scripts.src)
+    .src(path.scripts.src[0])
     .pipe(babel({
         presets: ['@babel/preset-env']
     }))
@@ -37,4 +37,15 @@ function scripts() {
     .pipe(gulp.dest(path.scripts.dest));
 }
 
-exports.default = gulp.series(gulp.parallel(styles, scripts));
+function admin() {
+    return gulp
+    .src(path.scripts.src[1])
+    .pipe(babel({
+        presets: ['@babel/preset-env']
+    }))
+    .pipe(uglify())
+    .pipe(concat('admin.min.js'))
+    .pipe(gulp.dest(path.scripts.dest));
+}
+
+exports.default = gulp.series(gulp.parallel(styles, scripts, admin));
