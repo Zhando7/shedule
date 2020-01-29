@@ -1,101 +1,62 @@
-const Shedule = require('../../../models/shedule');
+const   Shedule = require('../../../models/shedule'),
+        admin = require('../../../utils/admin');
 
-exports.createYear = (req, res) => {
-    if(!req.body) return res.status(400).json({
-        msg: 'The request body is null'
-    });
-
-    const newYear = req.body.year;
-
-    const year = new Shedule.Year({
-        year: newYear
-    });
-
-    year.save((err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Cannot save data'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document saved!'
-        })
-    })
+exports.createYear = async (req, res) => {
+    try {
+        admin.checkReqBody(req, res);
+        
+        const   year = req.body.year,
+                newYear = new Shedule.Year({ year }),
+                docs = await newYear.save();
+                
+        admin.sendResult(res, docs);
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }
 
-exports.getYear = (req, res) => {
-    const id = req.params.id;
-    
-    Shedule.Year.findById(id, (err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            })
-        }
-        Shedule.Month.find({ id_year: id }, (err, docs) => {
-            if(err) {
-                return res.status(400).json({
-                    msg: 'The id_year is not found'
-                })
-            }
-            return res.status(200).json({
-                msg: 'Document founded',
-                docs: docs
-            });
-        })
-    })
+exports.getYear = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const docs = await Shedule.Month.find({ id_year: id });
+
+        admin.sendResult(res, docs, 'Documents is founded!');
+    } catch (err) {
+        admin.sendError(err, res, 'Documents cannot find');
+    }
 }
 
-exports.updateYear = (req, res) => {
-    if(!req.body) return res.status(400).json({
-        msg: 'The request body is null'
-    });
+exports.updateYear = async (req, res) => {
+    try {
+        admin.checkReqBody(req, res);
 
-    const id = req.body.id;
-    const newYear = req.body.year;
+        const { _id, year } = req.body;
+        const docs = await Shedule.Year.updateOne({ _id }, { year });
 
-    Shedule.Year.updateOne({ _id: id }, {
-        year: newYear
-    }, (err, doc) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document do not update'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document saved',
-            doc: doc
-        });
-    })
+        admin.sendResult(res, docs, `The year is updated!`);
+    } catch (err) {
+        admin.sendError(err, res, 'The year cannot update');
+    }
 }
 
-exports.deleteYear = (req, res) => {
-    const id = req.params.id;
+exports.deleteYear = async (req, res) => {
+    try {
+        const   _id = req.params.id,
+                docs = await Shedule.Year.deleteOne({ _id });
 
-    Shedule.Year.deleteOne({ _id: id }, (err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document deleted'
-        });
-    });
+        admin.sendResult(res, docs, 'The year is deleted!');
+    } catch (err) {
+        admin.sendError(err, res, 'The year cannot find!');
+    }
 }
 
-exports.selectYear = (req, res) => {
-    const id = req.params.id;
+exports.selectYear = async (req, res) => {
+    try {
+        const   _id = req.params.id,
+                docs = await Shedule.Year.findById({ _id });
 
-    Shedule.Year.findById(id, (err, doc) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document found',
-            doc: doc
-        });
-    });
+                admin.sendResult(res, docs, 'The year is founded!');
+    } catch (err) {
+        admin.sendError(err, res, 'The year cannot find!');
+    }
 }
