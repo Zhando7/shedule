@@ -16,3 +16,22 @@ exports.createAdmin = () => {
         }
     });
 }
+
+exports.checkReqBody = (req, res) => {
+    if(!req.body) return res.status(400).json({
+        msg: 'The request body is null'
+    });
+}
+
+exports.sendResult = (res, docs, msg = 'Document is saved') => {
+    res.status(200).json({
+        msg: msg,
+        docs: docs
+    })
+}
+
+exports.sendError = (err, res, msg = 'The data cannot save') => {
+    res.status(400).json({
+        msg: msg
+    });
+}
