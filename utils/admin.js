@@ -31,7 +31,5 @@ exports.sendResult = (res, docs, msg = 'Document is saved') => {
 }
 
 exports.sendError = (err, res, msg = 'The data cannot save') => {
-    res.status(400).json({
-        msg: msg
-    });
+    res.status(400).render('error', { message: msg });
 }
