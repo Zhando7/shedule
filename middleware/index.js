@@ -67,12 +67,10 @@ module.exports = (app, express) => {
     */
     app.use(function(req, res, next) {
         res.status(404);
-        res.render('error', { error: 'Not found' });
-        return;
+        return res.render('error', { message: 'Not found' });
     });
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
-        res.render('error', { error: err.message });
-        return;
+        return res.render('error', { message: err.message });
     });
 }
