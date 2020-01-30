@@ -15,25 +15,32 @@
     <div class="container">
         <section class="year">
             <div class="row">
+                <!-- Заголовок страницы -->
                 <div class="col s12 m12">
                     <h2 class="left-align">Список лет</h2>
                 </div>
-                <form class="col s12 m12" action="/admin/year" method="POST">
+                <!-- end point -->
+
+                <!-- Форма создания года -->
+                <form name="createForm" class="col s12 m12">
                     <div class="row">
                         <div class="input-field col s12 m12">
-                            <input id="year" type="text" class="validate">
+                            <input name="year" type="number" min="2020" max="3000" class="validate">
                             <label for="year">Введите год</label>
                         </div>
                         <div class="submit-field col s12 m12">
-                            <button class="btn waves-effect waves-light" type="submit" name="action">Сохранить
+                            <button id="submit" class="btn waves-effect waves-light" type="submit" name="action">Сохранить
                                 <i class="material-icons right">send</i>
                             </button>
                             <button class="waves-effect waves-light btn" type="reset">Сбросить</button>
                         </div>
                     </div>
                 </form>
+                <!-- end point -->
+
+                <!-- Таблица со списком лет -->
                 <div class="col s12 m12">
-                    <table class="highlight">
+                    <table id="tableYear" class="highlight">
                         <thead>
                           <tr>
                               <th>Id</th>
@@ -43,24 +50,20 @@
                         </thead>
 
                         <tbody>
-                          <tr>
-                            <td>Alvin</td>
-                            <td>Eclair</td>
-                            <td>$0.87</td>
-                          </tr>
-                          <tr>
-                            <td>Alan</td>
-                            <td>Jellybean</td>
-                            <td>$3.76</td>
-                          </tr>
-                          <tr>
-                            <td>Jonathan</td>
-                            <td>Lollipop</td>
-                            <td>$7.00</td>
-                          </tr>
+                            <% for ( let iterator of docs ) { %>
+                                <tr>
+                                    <td><%= iterator._id %></td>
+                                    <td><%= iterator.year %></td>
+                                    <td>
+                                        <a href="#"><i class="small material-icons">edit</i></a>
+                                        <a href="#"><i class="small material-icons">delete</i></a>
+                                    </td>
+                                </tr>
+                            <% } %>
                         </tbody>
                       </table>
                 </div>
+                <!-- end point -->
             </div>
         </section>
     </div>
