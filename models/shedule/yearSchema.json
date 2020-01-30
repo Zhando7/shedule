@@ -1,3 +1,8 @@
 {
-    "year": { "type": "Number", "required": true }
+    "year": { 
+        "type": "Number", 
+        "required": true,
+        "min": 2020,
+        "max": 3000
+    }
 }
