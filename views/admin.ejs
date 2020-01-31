@@ -55,8 +55,8 @@
                                     <td><%= iterator._id %></td>
                                     <td><%= iterator.year %></td>
                                     <td>
-                                        <a href="#"><i class="small material-icons">edit</i></a>
-                                        <a href="#"><i class="small material-icons">delete</i></a>
+                                        <a id="<%= iterator._id %>" class="waves-effect waves-light btn"><i class="small material-icons">edit</i></a>
+                                        <a id="<%= iterator._id %>" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
                                     </td>
                                 </tr>
                             <% } %>

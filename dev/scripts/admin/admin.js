@@ -1,5 +1,8 @@
 console.log('Hello, admin');
 
+/*
+* Creating year
+*/
 document.getElementById("submit").addEventListener("click", function (e) {
     e.preventDefault();
     // To get form data
@@ -37,12 +40,14 @@ function addRowToTable(json) {
     
     cellId.innerHTML = `${json.docs._id}`;
     cellYear.innerHTML = `${json.docs.year}`;
-    cellOperation.innerHTML = getOperation();
+    cellOperation.innerHTML = getOperation(json);
 }
 
-function getOperation() {
-    let opEdit = '<a href="#"><i class="small material-icons">edit</i></a>';
-    let opDelete = '<a href="#"><i class="small material-icons">delete</i></a>';
+function getOperation(json) {
+    let id = json.docs._id;
+
+    let opEdit = `<a href="#"><i class="small material-icons">edit</i></a>`;
+    let opDelete = `<a href="/admin/year/${ id }"><i class="small material-icons">delete</i></a>`;
 
     let op = opEdit + opDelete;
     return op;
