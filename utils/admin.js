@@ -25,11 +25,15 @@ exports.checkReqBody = (req, res) => {
 
 exports.sendResult = (res, docs, msg = 'Document is saved') => {
     res.status(200).json({
+        status: 200,
         msg: msg,
         docs: docs
     })
 }
 
 exports.sendError = (err, res, msg) => {
-    res.status(err.status || 400).json({ message: msg || err.message });
+    res.status(err.status || 400).json({ 
+        status: err.status || 400,
+        message: msg || err.message 
+    });
 }
