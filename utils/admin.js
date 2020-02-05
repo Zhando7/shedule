@@ -34,6 +34,6 @@ exports.sendResult = (res, docs, msg = 'Document is saved') => {
 exports.sendError = (err, res, msg) => {
     res.status(err.status || 400).json({ 
         status: err.status || 400,
-        message: msg || err.message 
+        msg: msg || err.message 
     });
 }
