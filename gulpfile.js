@@ -12,7 +12,7 @@ var path = {
         dest: './public/stylesheets/'
     },
     scripts: {
-        src: [ './dev/scripts/*.js', './dev/scripts/admin/*.js' ],
+        src: [ './dev/scripts/*.js', './dev/scripts/admin/month.js' ],
         dest: './public/javascripts/'
     }
 };
@@ -44,7 +44,7 @@ function admin() {
         presets: ['@babel/preset-env']
     }))
     .pipe(uglify())
-    .pipe(concat('admin.min.js'))
+    .pipe(concat('month.min.js'))
     .pipe(gulp.dest(path.scripts.dest));
 }
 
