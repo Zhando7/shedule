@@ -15,17 +15,6 @@ exports.createYear = async (req, res) => {
     }
 }
 
-exports.getYear = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const docs = await Shedule.Month.find({ id_year: id });
-
-        admin.sendResult(res, docs, 'Documents is founded!');
-    } catch (err) {
-        admin.sendError(err, res, 'Documents cannot find');
-    }
-}
-
 exports.updateYear = async (req, res) => {
     try {
         admin.checkReqBody(req, res);
