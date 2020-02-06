@@ -1,6 +1,6 @@
 <%- include("layout/header.ejs"); %>
 <style>
-    .__year-edit {
+    .__month-edit {
         display: none;
     }
 </style>
@@ -17,24 +17,38 @@
         </div>
     </nav>
     <div class="container">
-        <!-- Список лет -->
-        <section class="year">
-            <div class="row __year">
+
+        <!-- Список месяцев -->
+        <section class="month">
+            <div class="row __month">
                 <!-- Заголовок формы -->
                 <div class="col s12 m12">
-                    <h2 class="left-align">Список лет</h2>
+                    <h2 class="left-align">Список месяцев</h2>
                 </div>
                 <!-- end point `заголовок формы` -->
 
-                <!-- Форма создания года -->
+                <!-- Форма создания месяца -->
                 <form name="createForm" class="col s12 m12">
                     <div class="row">
                         <div class="input-field col s12 m12">
-                            <input name="year" type="number" min="2020" max="3000" class="validate">
-                            <label for="year">Введите год</label>
+                            <select class="browser-default">
+                                <option disabled selected>Выберите месяц</option>
+                                <option value="1">Январь</option>
+                                <option value="2">Февраль</option>
+                                <option value="3">Март</option>
+                                <option value="4">Апрель</option>
+                                <option value="5">Май</option>
+                                <option value="6">Июнь</option>
+                                <option value="7">Июль</option>
+                                <option value="8">Август</option>
+                                <option value="9">Сентябрь</option>
+                                <option value="10">Октябрь</option>
+                                <option value="11">Ноябрь</option>
+                                <option value="12">Декабрь</option>
+                            </select>
                         </div>
                         <div class="submit-field col s12 m12">
-                            <button id="submitCreateYear" class="btn waves-effect waves-light" type="submit" name="action">Сохранить
+                            <button id="submitCreateMonth" class="btn waves-effect waves-light" type="submit" name="action">Сохранить
                                 <i class="material-icons right">send</i>
                             </button>
                             <button class="waves-effect waves-light btn" type="reset">Сбросить</button>
@@ -43,14 +57,15 @@
                 </form>
                 <!-- end point `форма создания года` -->
             </div>
-            <div class="row __year">
-                <!-- Таблица со списком лет -->
+
+            <div class="row __month">
+                <!-- Таблица со списком месяцев -->
                 <div class="col s12 m12">
-                    <table id="tableYear" class="highlight">
+                    <table id="tableMonth" value="<%= id %>" class="highlight">
                         <thead>
                           <tr>
                               <th class="hide-on-small-only">Id</th>
-                              <th>Год</th>
+                              <th>Месяц</th>
                               <th>Операции</th>
                           </tr>
                         </thead>
@@ -61,9 +76,9 @@
                                     <td class="hide-on-small-only">
                                         <%= iterator._id %>
                                     </td>
-                                    <!-- ячейка со значением года -->
+                                    <!-- ячейка со значением месяца -->
                                     <td id="td__<%= iterator._id %>">
-                                        <a href="/admin/month/<%= iterator._id %>"><%= iterator.year %></a>
+                                        <a href="/admin/day/<%= iterator._id %>"><%= iterator.month.title %></a>
                                     </td>
                                     <!-- ячейка с операциями -->
                                     <td>
@@ -75,9 +90,10 @@
                         </tbody>
                       </table>
                 </div>
-                <!-- end point `таблица со списком лет` -->
+                <!-- end point `таблица со списком месяцев` -->
             </div>
-            <div class="row __year-edit">
+
+            <div class="row __month-edit">
                 <!-- Заголовок формы -->
                 <div class="col s12 m12">
                     <h2 class="left-align">Форма изменения данных</h2>
@@ -88,11 +104,24 @@
                 <form name="editForm" class="col s12 m12">
                     <div class="row">
                         <div class="input-field col s12 m12">
-                            <input name="year" type="number" min="2020" max="3000" class="validate">
-                            <label for="year">Введите год</label>
+                            <select class="browser-default">
+                                <option value="" disabled selected>Выберите месяц</option>
+                                <option value="1">Январь</option>
+                                <option value="2">Февраль</option>
+                                <option value="3">Март</option>
+                                <option value="4">Апрель</option>
+                                <option value="5">Май</option>
+                                <option value="6">Июнь</option>
+                                <option value="7">Июль</option>
+                                <option value="8">Август</option>
+                                <option value="9">Сентябрь</option>
+                                <option value="10">Октябрь</option>
+                                <option value="11">Ноябрь</option>
+                                <option value="12">Декабрь</option>
+                            </select>
                         </div>
                         <div class="submit-field col s12 m12">
-                            <button id="submitEditYear" class="btn waves-effect waves-light" type="submit" name="action">Сохранить
+                            <button id="submitEditMonth" class="btn waves-effect waves-light" type="submit" name="action">Сохранить
                                 <i class="material-icons right">send</i>
                             </button>
                             <button class="waves-effect waves-light btn" type="reset">Сбросить</button>
@@ -103,9 +132,10 @@
                 <!-- End point `форма редактирования` -->
             </div>
         </section>
-        <!-- End point `список лет` -->
+        <!-- End point `cписок месяцев` -->
+        
     </div>
 </div>
 
-<script src="/javascripts/admin.min.js"></script>
+<script src="/javascripts/month.min.js"></script>
 <%- include("layout/footer.ejs"); %>
