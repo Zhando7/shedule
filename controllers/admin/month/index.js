@@ -17,69 +17,46 @@ exports.createMonth = async (req, res) => {
 
 exports.getMonth = async (req, res) => {
     try {
-        const id = req.params.id;
-        const docs = await Shedule.Month.find({ id_year: id });
+        const   id_year = req.params.id,
+                docs = await Shedule.Month.find({ id_year });
 
-        res.render('month', { docs, id });
+        res.render('month', { docs, id_year });
     } catch (err) {
         admin.sendError(err, res, 'Documents cannot find');
     }
 }
 
-exports.updateMonth = (req, res) => {
-    if(!req.body) return res.status(400).json({
-        msg: 'The request body is null'
-    });
+exports.updateMonth = async (req, res) => {
+    try {
+        admin.checkReqBody(req, res);
 
-    const id = req.body.id;
-    const number = req.body.number;
-    const title = req.body.title;
-
-    Shedule.Month.updateOne({ _id: id }, {
-        month: {
-            number: number,
-            title: title
-        }
-    }, (err, doc) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document do not update'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document saved',
-            doc: doc
-        });
-    });
+        const   { _id, month } = req.body,
+                docs = await Shedule.Month.updateOne({ _id }, { month });
+        
+        admin.sendResult(res, docs, `The month is updated!`);
+    } catch (err) {
+        admin.sendError(err, res, 'The month cannot update');
+    }
 }
 
-exports.deleteMonth = (req, res) => {
-    const id = req.params.id;
-
-    Shedule.Month.deleteOne({ _id: id }, (err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document deleted'
-        });
-    });
+exports.deleteMonth = async (req, res) => {
+    try {
+        const   _id = req.params.id,
+                docs = await Shedule.Month.deleteOne({ _id });
+        
+        admin.sendResult(res, docs, 'The month is deleted!');
+    } catch (err) {
+        admin.sendError(err, res, 'The year cannot find!');
+    }
 }
 
-exports.selectMonth = (req, res) => {
-    const id = req.params.id;
+exports.selectMonth = async (req, res) => {
+    try {
+        const   _id = req.params.id,
+                docs = await Shedule.Month.findById(_id);
 
-    Shedule.Month.findById(id, (err, doc) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document found',
-            doc: doc
-        });
-    });
+        admin.sendResult(res, docs, 'The month is founded!');
+    } catch (err) {
+        admin.sendError(err, res, 'The month cannot find!');
+    }
 }
