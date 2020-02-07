@@ -27,14 +27,13 @@ document.getElementById("submitCreateYear").addEventListener("click", function (
     
         // send a request to server
         xhr.open("POST", url, true);
-        // xhr.open(method, url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.addEventListener("load", function () {
             // receive and parse the server response 
             let json = JSON.parse(xhr.response);
             if(xhr.readyState == 4 && xhr.status == 200) {
                 form.elements["year"].value = "";
-                addRowToTable(json.docs);
+                addRowToTable.call(json.docs);
             } else {
                 console.log(json.msg);
             }
@@ -44,30 +43,30 @@ document.getElementById("submitCreateYear").addEventListener("click", function (
     }
 });
 
-function addRowToTable(json) {
+function addRowToTable() {
     let table = document.getElementById("tableYear"),
         row = table.insertRow(table.length);
-
+    
     // filling the created row with cells
     let cellId = row.insertCell(0),
         cellYear = row.insertCell(1),
         cellOperation = row.insertCell(2);
 
     // setting the required attributes
-    row.setAttribute("id", `tr__${json._id}`);
+    row.setAttribute("id", `tr__${this._id}`);
     cellId.setAttribute("class", "hide-on-small-only")
-    cellYear.setAttribute("id", `td__${json._id}`);
+    cellYear.setAttribute("id", `td__${this._id}`);
 
     // filling the cells with entered values
-    cellId.innerHTML = `${json._id}`;
-    cellYear.innerHTML = `<a href="/admin/month/${json._id}">${json.year}</a>`;
-    cellOperation.innerHTML = getOperation(json);
+    cellId.innerHTML = `${this._id}`;
+    cellYear.innerHTML = `<a href="/admin/month/${this._id}">${this.year}</a>`;
+    cellOperation.innerHTML = getOperation.call(this);
 }
 
-function getOperation(json) {
-    let { _id, year } = json;
+function getOperation() {
+    let { _id } = this;
 
-    let opEdit = `<a onclick="editSelectYear('${_id}', '${year}')" class="waves-effect waves-light btn"><i class="editLink small material-icons">edit</i></a>`,
+    let opEdit = `<a onclick="editSelectYear('${_id}')" class="waves-effect waves-light btn"><i class="editLink small material-icons">edit</i></a>`,
         opDelete = `<a onclick="delSelectYear('${_id}')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>`,
         op = opEdit + " " + opDelete;
     
@@ -166,11 +165,11 @@ document.getElementById("submitEditYear").addEventListener("click", function(e) 
     e.preventDefault();
 
     let form = document.forms["editForm"],
+        _id = form.getAttribute("value"),
         year = form[0].value;
     
     if(checkValue(year)) {
         let url = "/admin/year",
-            _id = form.getAttribute("value"),
             data = JSON.stringify({ _id, year }),
             xhr = new XMLHttpRequest();     // the XHR class instance creation
 
