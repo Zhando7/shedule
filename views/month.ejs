@@ -10,6 +10,7 @@
             <div class="container">
                 <ul id="nav-mobile" class="right">
                     <li><a href="/">На главную</a></li>
+                    <li><a href="/admin">Список лет</a></li>
                     <li><a href="/auth/logout">Выйти</a></li>
                 </ul>
             </div>
@@ -61,7 +62,7 @@
             <div class="row __month">
                 <!-- Таблица со списком месяцев -->
                 <div class="col s12 m12">
-                    <table id="tableMonth" value="<%= id %>" class="highlight">
+                    <table id="tableMonth" value="<%= id_year %>" class="highlight">
                         <thead>
                           <tr>
                               <th class="hide-on-small-only">Id</th>
@@ -82,8 +83,8 @@
                                     </td>
                                     <!-- ячейка с операциями -->
                                     <td>
-                                        <a onclick="editSelectYear('<%= iterator._id %>')" class="editLink waves-effect waves-light btn"><i class="small material-icons">edit</i></a>
-                                        <a onclick="delSelectYear('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
+                                        <a onclick="editSelectMonth('<%= iterator._id %>')" class="editLink waves-effect waves-light btn"><i class="small material-icons">edit</i></a>
+                                        <a onclick="delSelectMonth('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
                                     </td>
                                 </tr>
                             <% } %>
