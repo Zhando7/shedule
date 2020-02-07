@@ -12,7 +12,10 @@ var path = {
         dest: './public/stylesheets/'
     },
     scripts: {
-        src: [ './dev/scripts/*.js', './dev/scripts/admin/month.js' ],
+        src: [ 
+            './dev/scripts/*.js',
+            './dev/scripts/admin/admin.js',
+            './dev/scripts/admin/month.js' ],
         dest: './public/javascripts/'
     }
 };
@@ -39,7 +42,7 @@ function scripts() {
 
 function admin() {
     return gulp
-    .src(path.scripts.src[1])
+    .src(path.scripts.src[2])
     .pipe(babel({
         presets: ['@babel/preset-env']
     }))
