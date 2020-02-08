@@ -61,7 +61,7 @@ function addRowToTable() {
 
     // filling the cells with entered values
     cellId.innerHTML = `${this._id}`;
-    cellMonth.innerHTML = `<a href="/admin/month/${this._id}">${this.month.title}</a>`;
+    cellMonth.innerHTML = `<a href="/admin/date/${this._id}">${this.month.title}</a>`;
     cellOperation.innerHTML = getOperation.call(this);
 }
 
@@ -137,7 +137,7 @@ function triggerForm(bool, id = null, month = null) {
     let rowYear = document.getElementsByClassName("__month");
     let editForm = document.getElementsByClassName("__month-edit");
 
-    function displayRowYear(v) {
+    function displayRowMonth(v) {
         for(let i = 0; i < rowYear.length; i++ ) {
             rowYear[i].style.display = v;
         }
@@ -145,19 +145,19 @@ function triggerForm(bool, id = null, month = null) {
 
     switch(bool) {
         case true: {
-            displayRowYear("none");
+            displayRowMonth("none");
             editForm[0].style.display = "block";
             break;
         }
         case false: {
             editForm[0].style.display = "none";
-            displayRowYear("block");
-            document.getElementById(id).innerHTML = `<a href="/admin/month/${id}">${month}</a>`;
+            displayRowMonth("block");
+            document.getElementById(id).innerHTML = `<a href="/admin/date/${id}">${month}</a>`;
             break;
         }
         default: {
             editForm[0].style.display = "none";
-            displayRowYear("block");
+            displayRowMonth("block");
             break;
         }
     }

@@ -15,7 +15,7 @@
 //     while( j < docs.length ) {
 //         table += "<td>" + docs[j].date.getDate() + "</td>";
 
-//         if( docs[j].date.getDay() == 6 /* && j < ( docs.length - 1) */ ) {
+//         if( docs[j].date.getDay() == 5 /* && j < ( docs.length - 1) */ ) {
 //             table += "</tr><tr>";   // новый ряд
 //         }
         
