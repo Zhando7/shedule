@@ -1,116 +1,72 @@
-const Shedule = require('../../../models/shedule');
+const   Shedule = require('../../../models/shedule'),
+        admin = require('../../../utils/admin');
 
-exports.createLesson = (req, res) => {
-    if(!req.body) return res.status(400).json({
-        msg: 'The request body is null'
-    });;
+exports.createLesson = async (req, res) => {
+    try {
+        admin.checkReqBody(req, res);
 
-    const id_day = req.body.id_day;
-    const time_start = {
-        hour: req.body.time_start.hour,
-        minutes: req.body.time_start.minutes
-    };
-    const time_end = {
-        hour: req.body.time_end.hour,
-        minutes: req.body.time_end.minutes
-    };
-    const title = req.body.title;
-    const desc = req.body.desc;
-
-    const lesson = new Shedule.Lesson({
-        id_day: id_day,
-        time_start: {
-            hour: time_start.hour,
-            minutes: time_start.minutes
-        },
-        time_end: {
-            hour: time_end.hour,
-            minutes: time_end.minutes
-        },
-        title: title,
-        desc: desc
-    });
-
-    lesson.save((err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Cannot save data'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document saved!'
-        });
-    });
+        const   { id_date, time_start, time_end, title, desc } = req.body,
+                newLesson = new Shedule.Lesson({
+                    id_date,
+                    time_start,
+                    time_end,
+                    title,
+                    desc
+                }),
+                docs = await newLesson.save();
+        admin.sendResult(res, docs);
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }
 
-exports.updateLesson = (req, res) => {
-    if(!req.body) return res.status(400).json({
-        msg: 'The request body is null'
-    });;
+exports.getLesson = async (req, res) => {
+    try {
+        const   id_date = req.params.id,
+                docs = await Shedule.Lesson.find({ id_date });
 
-    const id = req.body.id;
-    const time_start = {
-        hour: req.body.time_start.hour,
-        minutes: req.body.time_start.minutes
-    };
-    const time_end = {
-        hour: req.body.time_end.hour,
-        minutes: req.body.time_end.minutes
-    };
-    const title = req.body.title;
-    const desc = req.body.desc;
-
-    Shedule.Lesson.updateOne({ _id: id }, {
-        time_start: {
-            hour: time_start.hour,
-            minutes: time_start.minutes
-        },
-        time_end: {
-            hour: time_end.hour,
-            minutes: time_end.minutes
-        },
-        title: title,
-        desc: desc
-    }, (err, doc) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document do not update'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document saved',
-            doc: doc
-        });
-    });
+        res.render('lesson', { id_date, docs });
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }
 
-exports.deleteLesson = (req, res) => {
-    const id = req.params.id;
+exports.updateLesson = async (req, res) => {
+try {
+        admin.checkReqBody(req, res);
 
-    Shedule.Lesson.deleteOne({ _id: id }, (err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document deleted'
-        });
-    });
+        const   { _id, time_start, time_end, title, desc } = req.body,
+                docs = await Shedule.Lesson.updateOne({ _id }, {
+                    time_start,
+                    time_end,
+                    title,
+                    desc
+                });
+
+        admin.sendResult(res, docs, 'The selected lesson has updated');
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }
 
-exports.selectLesson = (req, res) => {
-    const id = req.params.id;
+exports.deleteLesson = async (req, res) => {
+    try {
+        const   _id = req.params.id,
+                docs = await Shedule.Lesson.deleteOne({ _id });
 
-    Shedule.Lesson.findById(id, (err, doc) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document found',
-            doc: doc
-        });
-    });
+        admin.sendResult(res, docs, 'The selected lesson has deleted');
+    } catch (err) {
+        admin.sendError(err, res);
+    }
+}
+
+exports.selectLesson = async (req, res) => {
+    try {
+        const   _id = req.params.id,
+                docs = await Shedule.Lesson.findById({ _id });
+
+        admin.sendResult(res, docs, 'The selected lesson is found');
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }

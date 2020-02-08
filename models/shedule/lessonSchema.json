@@ -1,33 +1,7 @@
 {
-    "id_day": { "type": "ObjectId", "required": true },
-    "time_start": {
-        "hour": {
-            "type": "Number",
-            "required": true,
-            "min": 1,
-            "max": 24
-        },
-        "minutes": {
-            "type": "Number",
-            "required": true,
-            "min": 1,
-            "max": 60
-        }
-    },
-    "time_end": {
-        "hour": {
-            "type": "Number",
-            "required": true,
-            "min": 1,
-            "max": 24
-        },
-        "minutes": {
-            "type": "Number",
-            "required": true,
-            "min": 1,
-            "max": 60
-        }
-    },
+    "id_date": { "type": "ObjectId", "required": true },
+    "time_start": { "type": "String", "required": true },
+    "time_end": { "type": "String", "required": true },
     "title": {
         "type": "String",
         "required": true,
