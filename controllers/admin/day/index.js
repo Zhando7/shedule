@@ -1,101 +1,62 @@
-const Shedule = require('../../../models/shedule');
+const   Shedule = require('../../../models/shedule'),
+        admin = require('../../../utils/admin');
 
-exports.createDay = (req, res) => {
-    if(!req.body) return res.status(400).json({
-        msg: 'The request body is null'
-    });;
+exports.createDay = async (req, res) => {
+    try {
+        admin.checkReqBody(req, res);
 
-    const id_month = req.body.id_month;
-    const full_date = req.body.full_date;
+        const   { id_month, full_date } = req.body,
+                createNewDay = new Shedule.Day({ id_month, full_date }),
+                docs = await createNewDay.save();
 
-    const day = new Shedule.Day({
-        id_month: id_month,
-        full_date: full_date
-    });
-
-    day.save((err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Cannot save data'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document saved!'
-        });
-    });
+        admin.sendResult(res, docs);
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }
 
-exports.getDay = (req, res) => {
-    const id = req.params.id;
-    
-    Shedule.Day.findById(id, (err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        Shedule.Lesson.find({ id_day: id }, (err, docs) => {
-            if(err) {
-                return res.status(400).json({
-                    msg: 'The id_day is not found'
-                })
-            }
-            return res.status(200).json({
-                msg: 'Document founded',
-                docs: docs
-            });
-        })
-    });
+exports.getDay = async (req, res) => {
+    try {
+        const   id_month = req.params.id,
+                docs = await Shedule.Day.find({ id_month });
+
+        res.render('day', { id_month, docs })
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }
 
-exports.updateDay = (req, res) => {
-    if(!req.body) return res.status(400).json({
-        msg: 'The request body is null'
-    });
+exports.updateDay = async (req, res) => {
+    try {
+        admin.checkReqBody(req, res);
 
-    const id = req.body.id;
-    const full_date = req.body.full_date;
+        const   { _id, full_date } = req.body,
+                docs = await Shedule.Day.updateOne({ _id }, { full_date });
 
-    Shedule.Day.updateOne({ _id: id }, { full_date: full_date }, (err, doc) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document do not update'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document saved',
-            doc: doc
-        });
-    });
+        admin.sendResult(res, docs, 'The selected day has updated');
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }
 
-exports.deleteDay = (req, res) => {
-    const id = req.params.id;
+exports.deleteDay = async (req, res) => {
+    try {
+        const   _id = req.params.id,
+                docs = await Shedule.Day.deleteOne({ _id });
 
-    Shedule.Day.deleteOne({ _id: id }, (err) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document deleted'
-        });
-    });
+        admin.sendResult(res, docs, 'The selected day has deleted');
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }
 
-exports.selectDay = (req, res) => {
-    const id = req.params.id;
+exports.selectDay = async (req, res) => {
+    try {
+        const   _id = req.params.id,
+                docs = await Shedule.Day.findById({ _id });
 
-    Shedule.Day.findById(id, (err, doc) => {
-        if(err) {
-            return res.status(400).json({
-                msg: 'Document not found'
-            });
-        }
-        return res.status(200).json({
-            msg: 'Document found',
-            doc: doc
-        });
-    });
+        admin.sendResult(res, docs, 'The selected day is found');
+    } catch (err) {
+        admin.sendError(err, res);
+    }
 }

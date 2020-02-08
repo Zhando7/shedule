@@ -22,9 +22,9 @@ exports.updateYear = async (req, res) => {
         const { _id, year } = req.body;
         const docs = await Shedule.Year.updateOne({ _id }, { year });
 
-        admin.sendResult(res, docs, `The year is updated!`);
+        admin.sendResult(res, docs, `The selected year has updated`);
     } catch (err) {
-        admin.sendError(err, res, 'The year cannot update');
+        admin.sendError(err, res);
     }
 }
 
@@ -33,9 +33,9 @@ exports.deleteYear = async (req, res) => {
         const   _id = req.params.id,
                 docs = await Shedule.Year.deleteOne({ _id });
 
-        admin.sendResult(res, docs, 'The year is deleted!');
+        admin.sendResult(res, docs, 'The selected year has deleted');
     } catch (err) {
-        admin.sendError(err, res, 'The year cannot find!');
+        admin.sendError(err, res);
     }
 }
 
@@ -44,8 +44,8 @@ exports.selectYear = async (req, res) => {
         const   _id = req.params.id,
                 docs = await Shedule.Year.findById({ _id });
 
-                admin.sendResult(res, docs, 'The year is founded!');
+                admin.sendResult(res, docs, 'The selected year is found');
     } catch (err) {
-        admin.sendError(err, res, 'The year cannot find!');
+        admin.sendError(err, res);
     }
 }
