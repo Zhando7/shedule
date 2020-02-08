@@ -15,7 +15,9 @@ var path = {
         src: [ 
             './dev/scripts/*.js',
             './dev/scripts/admin/admin.js',
-            './dev/scripts/admin/month.js' ],
+            './dev/scripts/admin/month.js',
+            './dev/scripts/admin/date.js'
+        ],
         dest: './public/javascripts/'
     }
 };
@@ -42,12 +44,12 @@ function scripts() {
 
 function admin() {
     return gulp
-    .src(path.scripts.src[2])
+    .src(path.scripts.src[3])
     .pipe(babel({
         presets: ['@babel/preset-env']
     }))
     .pipe(uglify())
-    .pipe(concat('month.min.js'))
+    .pipe(concat('date.min.js'))
     .pipe(gulp.dest(path.scripts.dest));
 }
 
