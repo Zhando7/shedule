@@ -1,6 +1,6 @@
 const   year = require('./year'),
         month = require('./month'),
-        day = require('./day'),
+        date = require('./date'),
         lesson = require('./lesson'),
         Shedule = require('../../models/shedule'),
         admin = require('../../utils/admin');
@@ -8,7 +8,7 @@ const   year = require('./year'),
 module.exports = {
     year: year,
     month: month,
-    day: day,
+    date: date,
     lesson: lesson,
     getIndex: async (req, res) => {
         try {
