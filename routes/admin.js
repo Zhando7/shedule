@@ -2,33 +2,33 @@ const express = require('express');
 const adminRouter = express.Router();
 const adminController = require('../controllers/admin');
 
-// Create month, day, lesson
+// Create month, date, lesson
 adminRouter.post('/year', adminController.year.createYear);
 adminRouter.post('/month', adminController.month.createMonth);
-adminRouter.post('/day', adminController.day.createDay);
+adminRouter.post('/date', adminController.date.createDate);
 adminRouter.post('/lessons', adminController.lesson.createLesson);
 
-// Read index, month, day, lessons
+// Read index, month, date, lessons
 adminRouter.get('/', adminController.getIndex);
 adminRouter.get('/month/:id', adminController.month.getMonth);
-adminRouter.get('/day/:id', adminController.day.getDay);
+adminRouter.get('/date/:id', adminController.date.getDate);
 
-// Update month, day, lesson
+// Update month, date, lesson
 adminRouter.put('/year', adminController.year.updateYear);
 adminRouter.put('/month', adminController.month.updateMonth);
-adminRouter.put('/day', adminController.day.updateDay);
+adminRouter.put('/date', adminController.date.updateDate);
 adminRouter.put('/lessons', adminController.lesson.updateLesson);
 
-// Delete month, day, lesson
+// Delete month, date, lesson
 adminRouter.delete('/year/:id', adminController.year.deleteYear);
 adminRouter.delete('/month/:id', adminController.month.deleteMonth);
-adminRouter.delete('/day/:id', adminController.day.deleteDay);
+adminRouter.delete('/date/:id', adminController.date.deleteDate);
 adminRouter.delete('/lessons/:id', adminController.lesson.deleteLesson);
 
-// Select month, day, lesson
+// Select month, date, lesson
 adminRouter.get('/year/select/:id', adminController.year.selectYear);
 adminRouter.get('/month/select/:id', adminController.month.selectMonth);
-adminRouter.get('/day/select/:id', adminController.day.selectDay);
+adminRouter.get('/date/select/:id', adminController.date.selectDate);
 adminRouter.get('/lessons/select/:id', adminController.lesson.selectLesson);
 
 module.exports = adminRouter;
