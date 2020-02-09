@@ -1,103 +1,108 @@
 <%- include("layout/header.ejs") %>
-
+<style>
+    .row {
+        margin: 10px 0;
+        padding: 5px 0;
+    }
+    .collection-item, td {
+        cursor: pointer;
+    }
+    .collection-item:hover, td:hover {
+        background-color: #64b5f6;
+    }
+</style>
 <div class="wrap">
-    <nav>
-        <div class="sidebar-wrapper">
-            <ul>
-              <li><a href="#1">Расписание</a></li>
-              <li><a href="/admin">Панель управления</a></li>
-            </ul>
+    <nav class="top-nav #2196f3 blue">
+        <div class="container">
+            <div class="nav-wrapper">
+                <span class="brand-logo">Jastar-time</span>
+                <ul class="right hide-on-med-and-down">
+                  <% if(checkAdmin) { %>
+                        <li><a href="/admin">Панель управления</a></li>
+                    <% } else { %>
+                        <li><a id="modalTrigger" href="#modal1" class="modal-trigger">Панель управления</a></li>
+                    <% } %>
+                </ul>
+                <ul id="slide-out" class="sidenav">
+                    <li>
+                        <div class="user-view">
+                            <div class="background" style="background-color: #64b5f6;"></div>
+                        </div>
+                    </li>
+                    <% if(checkAdmin) { %>
+                        <li><a href="/admin">Панель управления</a></li>
+                    <% } else { %>
+                        <li><a id="modalTrigger" href="#modal1" class="modal-trigger">Панель управления</a></li>
+                    <% } %>
+                </ul>
+                <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            </div>
         </div>
     </nav>
-    <section class="about">
-        <div class="title">
-            <h2>Jastar time</h2>
+
+    <div class="container">
+        <section class="month">
+            <div class="row">
+                <div class="col s12 m10 offset-m1">
+                    <ul class="collection with-header z-depth-1">
+                        <li class="collection-header"><h4>Выберите месяц</h4></li>
+                        <% if(docs) { %>
+                            <% docs.forEach(el => { %>
+                                <li onclick="findSelectMonth('calendar', '<%= el._id %>')" class="collection-item">
+                                    <%= el.month.title %>
+                                </li>
+                            <% }) %>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="days">
+            <div class="row">
+                <div class="col s12 m10 offset-m1">
+                    <div id="calendar" class="z-depth-1"></div>
+                </div>
+            </div>
+        </section>
+        <section class="lessons">
+            <div class="row">
+                <div class="col s12 m10 offset-m1">
+                    <div id="tableLessons" class="z-depth-1"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+     <!-- Modal Structure -->
+     <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+                    <form name="loginForm" class="col s12 m12">
+                        <div class="row">
+                            <div class="input-field col s12 m12 ">
+                                <input name="user_name" type="text" data-length="10">
+                                <label for="user_name">Имя пользователя</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12 m12 ">
+                                <input name="user_pass" type="password" data-length="10">
+                                <label for="user_pass">Пароль</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="button-field col s12 m12">
+                                <button id="submitLogin" type="submit" class="waves-effect #03a9f4 light-blue btn">Подтвердить</button>
+                                <span class="modal-close waves-effect #03a9f4 light-blue btn hide-on-small-only">Закрыть окно</span >
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="info">
-            <p class="phone">
-                <img src="#" alt="phone">
-                <span>8 (7232) 75 33 33</span>
-            </p>
-            <p class="email">
-                <img src="#" alt="email">
-                <span>ipo_ekrgcnto@mail.ru</span>
-            </p>
-            <p class="location">
-                <img src="#" alt="location">
-                <span>пр. Абая, дом 21, 2 этаж</span>
-            </p>
-        </div>
-    </section>
-    <section class="select-month">
-        <div class="title">
-            <h2>Выберите необходимый месяц</h2>
-        </div>
-        <div class="list-months">
-            <div class="item">
-                <h3>Январь</h3>
-            </div>
-            <div class="item">
-                <h3>Февраль</h3>
-            </div>
-            <div class="item">
-                <h3>Март</h3>
-            </div>
-            <div class="item">
-                <h3>Апрель</h3>
-            </div>
-            <div class="item">
-                <h3>Май</h3>
-            </div>
-            <div class="item">
-                <h3>Июнь</h3>
-            </div>
-            <div class="item">
-                <h3>Июль</h3>
-            </div>
-            <div class="item">
-                <h3>Август</h3>
-            </div>
-            <div class="item">
-                <h3>Сентябрь</h3>
-            </div>
-            <div class="item">
-                <h3>Октябрь</h3>
-            </div>
-            <div class="item">
-                <h3>Ноябрь</h3>
-            </div>
-            <div class="item">
-                <h3>Декабрь</h3>
-            </div>
-        </div>
-    </section>
-    <section class="select-day">
-        <div class="title">
-            <h2>Выберите необходимый день</h2>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>пн</th>
-                    <th>вт</th>
-                    <th>ср</th>
-                    <th>чт</th>
-                    <th>пт</th>
-                    <th>сб</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    </div>
 </div>
 
+<script src="<%= assetFingerprint('/javascripts/main.min.js') %>"></script>
 <%- include("layout/footer.ejs"); %>

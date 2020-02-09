@@ -5,24 +5,36 @@
     }
 </style>
 <div class="main">
-    <nav>
-        <div class="nav-wrapper teal lighten-2">
-            <div class="container">
-                <ul id="nav-mobile" class="right">
+    <nav class="top-nav teal lighten-2">
+        <div class="container">
+            <div class="nav-wrapper">
+                <span class="brand-logo">Jastar-time</span>
+                <ul class="right hide-on-med-and-down">
                     <li><a href="/">На главную</a></li>
-                    <li><a href="/auth/logout">Выйти</a></li>
+                    <li><a href="/logout">Выйти</a></li>
                 </ul>
+                <ul id="slide-out" class="sidenav">
+                    <li>
+                        <div class="user-view">
+                            <div class="background" style="background-color: teal;"></div>
+                        </div>
+                    </li>
+                    <li><a href="/">На главную</a></li>
+                    <li><div class="divider"></div></li>
+                    <li><a href="/logout">Выйти</a></li>
+                </ul>
+                <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             </div>
-            
         </div>
     </nav>
+
     <div class="container">
         <!-- Список лет -->
         <section class="year">
             <div class="row __year">
                 <!-- Заголовок формы -->
                 <div class="col s12 m12">
-                    <h2 class="left-align">Список лет</h2>
+                    <h3 class="left-align">Список лет</h3>
                 </div>
                 <!-- end point `заголовок формы` -->
 
