@@ -12,7 +12,6 @@ module.exports = (app, express) => {
             checkAuth = require('./checkAuth'),
 
             adminRouter = require('../routes/admin'),
-            authRouter = require('../routes/authentication'),
             indexRouter = require('../routes');
 
     /*
@@ -57,9 +56,7 @@ module.exports = (app, express) => {
     /*
     * Routing
     */
-    // app.use('/admin', checkAuth, adminRouter);
-    app.use('/admin', adminRouter);
-    app.use('/auth', authRouter);
+    app.use('/admin', checkAuth, adminRouter);
     app.use('/', indexRouter);
 
     /*
