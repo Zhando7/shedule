@@ -1,10 +1,20 @@
 /*
+* Initialization of the Sidenav
+*/
+document.addEventListener("DOMContentLoaded", function () {
+    var elems = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(elems);
+});
+/*
+* End point `Initialization of the Sidenav`
+*/
+
+/*
 * the `DatePicker` HTML element initialization
 */
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.datepicker');
     var options = {
-        disableWeekends: true,
         i18n: {
             months: [
                 'Январь',
@@ -179,7 +189,7 @@ function triggerForm(bool, id = null, date = null) {
         case false: {
             editForm[0].style.display = "none";
             displayRowDate("block");
-            document.getElementById(id).innerHTML = `<a href="/admin/date/${id}">${getFormatDate(date)}</a>`;
+            document.getElementById(`td__${id}`).innerHTML = `<a href="/admin/date/${id}">${getFormatDate(date)}</a>`;
             break;
         }
         default: {
@@ -209,7 +219,7 @@ document.getElementById("submitEditDate").addEventListener("click", function (e)
             var json = JSON.parse(xhr.response);
 
             if(xhr.readyState == 4 && xhr.status == 200) {
-                triggerForm(false, `td__${_id}`, full_date);
+                triggerForm(false, _id, full_date);
             } else {
                 console.log(json.msg);
             }

@@ -1,5 +1,16 @@
 console.log('Hello, admin');
 
+/*
+* Initialization of the Sidenav
+*/
+document.addEventListener("DOMContentLoaded", function () {
+    var elems = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(elems);
+});
+/*
+* End point `Initialization of the Sidenav`
+*/
+
 function checkValue(year) {
     if(year == "") {
         M.toast({html: 'Заполните поле: "Введите год'});
@@ -150,7 +161,7 @@ function triggerForm(bool, id = null, year = null) {
         case false: {
             editForm[0].style.display = "none";
             displayRowYear("block");
-            document.getElementById(id).innerHTML = `<a href="/admin/month/${id}">${year}</a>`;
+            document.getElementById(`td__${id}`).innerHTML = `<a href="/admin/month/${id}">${year}</a>`;
             break;
         }
         default: {
@@ -178,7 +189,7 @@ document.getElementById("submitEditYear").addEventListener("click", function(e) 
         xhr.addEventListener("load", function() {
             let json = JSON.parse(xhr.response);
             if(xhr.readyState == 4 && xhr.status == 200) {
-                triggerForm(false, `td__${_id}`, year);
+                triggerForm(false, _id, year);
             } else {
                 console.log(json.msg);
             }

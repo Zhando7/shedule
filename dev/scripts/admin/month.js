@@ -1,5 +1,16 @@
 console.log("Hello, admin");
 
+/*
+* Initialization of the Sidenav
+*/
+document.addEventListener("DOMContentLoaded", function () {
+    var elems = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(elems);
+});
+/*
+* End point `Initialization of the Sidenav`
+*/
+
 function checkValue(month) {
     if( month >= 1 && month <= 12) {
         return true;
@@ -152,7 +163,7 @@ function triggerForm(bool, id = null, month = null) {
         case false: {
             editForm[0].style.display = "none";
             displayRowMonth("block");
-            document.getElementById(id).innerHTML = `<a href="/admin/date/${id}">${month}</a>`;
+            document.getElementById(`td__${id}`).innerHTML = `<a href="/admin/date/${id}">${month}</a>`;
             break;
         }
         default: {
@@ -183,7 +194,7 @@ document.getElementById("submitEditMonth").addEventListener("click", function(e)
         xhr.addEventListener("load", function() {
             let json = JSON.parse(xhr.response);
             if(xhr.readyState == 4 && xhr.status == 200) {
-                triggerForm(false, `td__${_id}`, month.title);
+                triggerForm(false, _id, month.title);
             } else {
                 console.log(json.msg);
             }
