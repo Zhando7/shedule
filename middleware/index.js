@@ -30,6 +30,11 @@ module.exports = (app, express) => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
+    /*
+    * Body limit is 10
+    */
+    app.use(express.json({ limit: '10kb' }));
+
     /* 
     * `staticAsset` используем для создания опечатков 
     * в URL закэшированных статических файлов 
