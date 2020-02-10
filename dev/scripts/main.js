@@ -76,10 +76,14 @@ function checkSelectMonth(el, id) {
 }
 
 function haveDates(el){
-    (this && el) ?
-        this.docs.length ? createCalendar(el, this.docs) : M.toast({ html: "Данный месяц не заполнен датами" })
-        :
-        null;
+    if(this && el) {
+        if(this.docs.length) {
+            createCalendar(el, this.docs)
+        } else {
+            document.getElementById("calendar").style.display = "none";
+            M.toast({ html: "Данный месяц не заполнен датами" });
+        } 
+    }
 }
 
 function findSelectMonth(el, id) {
@@ -132,6 +136,7 @@ function createCalendar(elem, docs) {
 
     table += "</tr></tbody></table>";
     document.getElementById(`${elem}`).innerHTML = table;
+    document.getElementById(`${elem}`).style.display = "block";
 }
 
 function createCell(i) {
