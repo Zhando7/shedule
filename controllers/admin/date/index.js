@@ -19,12 +19,21 @@ exports.getDate = async (req, res) => {
     try {
         const   id_month = req.params.id,
                 year = await Shedule.Month.findOne({ _id: id_month }),
-                docs = await Shedule.nDate.find({ id_month });
-                
+                foundDates = await Shedule.nDate.find({ id_month }),
+                docs = formatingDates.call(foundDates);
+        
         res.render('date', { year, id_month, docs })
     } catch (err) {
         admin.sendError(err, res);
     }
+}
+
+function formatingDates() {
+    return this.map(el => ({
+        _id: el._id,
+        id_month: el.id_month,
+        full_date: new Date(el.full_date).getDate()
+    }));
 }
 
 exports.updateDate = async (req, res) => {
