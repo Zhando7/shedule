@@ -80,7 +80,7 @@
                                     </td>
                                     <!-- ячейка со значением даты -->
                                     <td id="td__<%= iterator._id %>">
-                                        <a href="/admin/lesson/<%= iterator._id %>"><%= new Date(iterator.full_date).getDate() %></a>
+                                        <a href="/admin/lesson/<%= iterator._id %>"><%= iterator.full_date %></a>
                                     </td>
                                     <!-- ячейка с операциями -->
                                     <td>
