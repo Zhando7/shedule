@@ -189,7 +189,7 @@ function triggerForm(bool, id = null, date = null) {
         case false: {
             editForm[0].style.display = "none";
             displayRowDate("block");
-            document.getElementById(`td__${id}`).innerHTML = `<a href="/admin/date/${id}">${getFormatDate(date)}</a>`;
+            document.getElementById(`td__${id}`).innerHTML = `<a href="/admin/lesson/${id}">${getFormatDate(date)}</a>`;
             break;
         }
         default: {
