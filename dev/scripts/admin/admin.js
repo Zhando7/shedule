@@ -7,9 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var elems = document.querySelectorAll(".sidenav");
     M.Sidenav.init(elems);
 });
-/*
-* End point `Initialization of the Sidenav`
-*/
 
 function checkValue(year) {
     if(year == "") {
@@ -27,8 +24,8 @@ function checkValue(year) {
 */
 document.getElementById("submitCreateYear").addEventListener("click", function (e) {
     e.preventDefault();
-    // to get the `year` value from the form `createForm`
-    let form = document.forms["createForm"],
+    // to get the `year` input value from the `createForm` html element
+    var form = document.forms["createForm"],
         year = form.elements["year"].value;
     
     if(checkValue(year)) {
@@ -36,15 +33,16 @@ document.getElementById("submitCreateYear").addEventListener("click", function (
             data = JSON.stringify({ year }),
             xhr = new XMLHttpRequest();         // the XHR class instance creation
     
-        // send a request to server
+        // to send a request to server
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.addEventListener("load", function () {
             // receive and parse the server response 
-            let json = JSON.parse(xhr.response);
+            var json = JSON.parse(xhr.response);
+
             if(xhr.readyState == 4 && xhr.status == 200) {
                 form.elements["year"].value = "";
-                addRowToTable.call(json.docs);
+                addRowToTable.call(json.docs, "tableYear");
             } else {
                 console.log(json.msg);
             }
@@ -54,12 +52,12 @@ document.getElementById("submitCreateYear").addEventListener("click", function (
     }
 });
 
-function addRowToTable() {
-    let table = document.getElementById("tableYear"),
+function addRowToTable(idHtmlElement) {
+    var table = document.getElementById(idHtmlElement),
         row = table.insertRow(table.length);
     
     // filling the created row with cells
-    let cellId = row.insertCell(0),
+    var cellId = row.insertCell(0),
         cellYear = row.insertCell(1),
         cellOperation = row.insertCell(2);
 
@@ -75,76 +73,78 @@ function addRowToTable() {
 }
 
 function getOperation() {
-    let { _id } = this;
-
-    let opEdit = `<a onclick="editSelectYear('${_id}')" class="waves-effect waves-light btn"><i class="editLink small material-icons">edit</i></a>`,
+    var { _id } = this,
+        opEdit = `<a onclick="editSelectYear('${_id}')" class="waves-effect waves-light btn"><i class="editLink small material-icons">edit</i></a>`,
         opDelete = `<a onclick="delSelectYear('${_id}')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>`,
         op = opEdit + " " + opDelete;
     
     return op;
 }
 
-// to delete the selected year
+// deleting the selected year
 function delSelectYear(id) {
-    let url = `/admin/year/${ id }`;
-
-    // the XHR class instance creation
-    let xhr = new XMLHttpRequest();
+    if(id) {
+        let url = `/admin/year/${ id }`,
+            xhr = new XMLHttpRequest();     // the XHR class instance creation
     
-    // send a request to delete the selected year
-    xhr.open('DELETE', url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.addEventListener("load", function () {
-        // receive and parse the server response
-        let json = JSON.parse(xhr.response);
-            
-        if(xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById(`tr__${id}`).remove();
-        } else {
-            console.log(json.msg);
-        }
-    });
+        // to send a request to delete the selected year
+        xhr.open('DELETE', url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.addEventListener("load", function () {
+            // receive and parse the server response
+            var json = JSON.parse(xhr.response);
+                
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById(`tr__${id}`).remove();
+            } else {
+                console.log(json.msg);
+            }
+        });
 
-    xhr.send(null);
+        xhr.send(null);
+    } else {
+        return null;
+    }
 }
-/*
-* End point `To create the year`
-*/
 
 /*
 * To edit the selected year
 */
 function editSelectYear(id) {
-    let url = `/admin/year/select/${id}`;
-    // the XHR class instance creation
-    let xhr = new XMLHttpRequest();
+    if(id) {
+        let url = `/admin/year/select/${id}`,
+            xhr = new XMLHttpRequest();     // the XHR class instance creation
 
-    // send a request to select the selected year
-    xhr.open("GET", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.addEventListener("load", function() {
-        // receive and parse the server response
-        let json = JSON.parse(xhr.response);
+        // to send a request to get the selected year
+        xhr.open("GET", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.addEventListener("load", function() {
+            // receive and parse the server response
+            var json = JSON.parse(xhr.response);
 
-        if(xhr.readyState == 4 && xhr.status == 200) {
-            triggerForm(true);  // to show the `editForm` HTML element of selected year
-            /*
-            * to set the attribute and value of the `input` HTML element
-            */
-            let inputEditForm = document.forms["editForm"][0];
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                /*
+                * to set the attribute and value of the `input` HTML element
+                */
+                let inputEditForm = document.forms["editForm"][0];
+
                 document.forms["editForm"].setAttribute("value", json.docs._id);
                 inputEditForm.value = json.docs.year;
-        } else {
-            console.log(json.msg);
-        }
-    });
+                triggerForm(true);  // to show the `editForm` HTML element of the selected year
+            } else {
+                console.log(json.msg);
+            }
+        });
 
-    xhr.send(null);
+        xhr.send(null);
+    } else {
+        return null;
+    }
 }
 
 function triggerForm(bool, id = null, year = null) {
-    let rowYear = document.getElementsByClassName("__year");
-    let editForm = document.getElementsByClassName("__year-edit");
+    var rowYear = document.getElementsByClassName("__year"),
+        editForm = document.getElementsByClassName("__year-edit");
 
     function displayRowYear(v) {
         for(let i = 0; i < rowYear.length; i++ ) {
@@ -175,7 +175,7 @@ function triggerForm(bool, id = null, year = null) {
 document.getElementById("submitEditYear").addEventListener("click", function(e) {
     e.preventDefault();
 
-    let form = document.forms["editForm"],
+    var form = document.forms["editForm"],
         _id = form.getAttribute("value"),
         year = form[0].value;
     

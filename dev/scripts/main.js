@@ -7,9 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var elems = document.querySelectorAll(".modal");
     M.Modal.init(elems);
 });
-/*
-* End point `Initialization of the modals boxes`
-*/
 
 /*
 * Initialization of the Sidenav
@@ -18,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var elems = document.querySelectorAll(".sidenav");
     M.Sidenav.init(elems);
 });
-/*
-* End point `Initialization of the Sidenav`
-*/
 
+/*
+* Authorization
+*/
 function checkValue(n, p) {
     if(n && p) {
         return true;
@@ -30,9 +27,6 @@ function checkValue(n, p) {
     }
 }
 
-/*
-* Authorization
-*/
 document.getElementById("submitLogin").addEventListener("click", function(e) {
     e.preventDefault();
 
@@ -60,22 +54,12 @@ document.getElementById("submitLogin").addEventListener("click", function(e) {
         xhr.send(data);
     }
 });
-/*
-* End point `Authorization`
-*/
 
 /*
-* Months
+* Functions for interacting with months, dates and lessons
 */
-function checkSelectMonth(el, id) {
-    if(el && id) {
-        return true;
-    } else {
-        M.toast({ html: "Вы не выбрали месяц" });
-    }
-}
 
-function haveDates(el){
+function checkExistsDates(el){
     if(this && el) {
         if(this.docs.length) {
             createCalendar(el, this.docs)
@@ -89,7 +73,7 @@ function haveDates(el){
 function findSelectMonth(el, id) {
     document.getElementById("tableLessons").style.display = "none";
     
-    if(checkSelectMonth(el, id)) {
+    if(el && id) {
         let url = `/view/dates/${id}`,
             xhr = new XMLHttpRequest();
         
@@ -99,15 +83,20 @@ function findSelectMonth(el, id) {
             var json = JSON.parse(xhr.response);
 
             if(xhr.readyState == 4 && xhr.status == 200) {
-                haveDates.call(json, el);
+                checkExistsDates.call(json, el);
             } else {
                 console.log(json.msg);
             }
         });
         xhr.send(null);
-    } 
+    } else {
+        return null;
+    }
 }
 
+/*
+* The function for deleting 
+*/
 function createCalendar(elem, docs) {
     let table = '<table class="striped centered"><thead><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th></tr></thead><tbody><tr>',
         firstDay = new Date(docs[0].full_date).getDay(),
@@ -148,7 +137,7 @@ function createCell(i) {
     return cell;
 }
 /*
-* End point `Months`
+* End point For deleting 
 */
 
 /*
@@ -176,6 +165,8 @@ function getLessons(id) {
             }
         });
         xhr.send(null);
+    } else {
+        return null;
     }
 }
 

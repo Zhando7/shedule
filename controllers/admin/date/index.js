@@ -5,9 +5,9 @@ exports.createDate = async (req, res) => {
     try {
         admin.checkReqBody(req, res);
 
-        const   { id_month, full_date } = req.body,
-                createNewDate = new Shedule.nDate({ id_month, full_date }),
-                docs = await createNewDate.save();
+        let { id_month, full_date } = req.body,
+            createNewDate = new Shedule.nDate({ id_month, full_date }),
+            docs = await createNewDate.save();
         
         admin.sendResult(res, docs);
     } catch (err) {
@@ -17,10 +17,10 @@ exports.createDate = async (req, res) => {
 
 exports.getDate = async (req, res) => {
     try {
-        const   id_month = req.params.id,
-                year = await Shedule.Month.findOne({ _id: id_month }),
-                foundDates = await Shedule.nDate.find({ id_month }),
-                docs = formatingDates.call(foundDates);
+        let id_month = req.params.id,
+            year = await Shedule.Month.findOne({ _id: id_month }),
+            foundDates = await Shedule.nDate.find({ id_month }),
+            docs = formatingDates.call(foundDates);
                 
         res.render('date', { year, id_month, docs })
     } catch (err) {

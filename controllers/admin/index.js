@@ -12,7 +12,8 @@ module.exports = {
     lesson: lesson,
     getIndex: async (req, res) => {
         try {
-            const docs = await Shedule.Year.find({});
+            let docs = await Shedule.Year.find({});
+            
             res.render('admin', { docs });
         } catch (err) {
             admin.sendError(err, res, 'Years not found');

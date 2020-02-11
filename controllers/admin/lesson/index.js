@@ -5,15 +5,10 @@ exports.createLesson = async (req, res) => {
     try {
         admin.checkReqBody(req, res);
 
-        const   { id_date, time_start, time_end, title, desc } = req.body,
-                newLesson = new Shedule.Lesson({
-                    id_date,
-                    time_start,
-                    time_end,
-                    title,
-                    desc
-                }),
-                docs = await newLesson.save();
+        let { id_date, time_start, time_end, title, desc } = req.body,
+            newLesson = new Shedule.Lesson({ id_date, time_start, time_end, title, desc }),
+            docs = await newLesson.save();
+
         admin.sendResult(res, docs);
     } catch (err) {
         admin.sendError(err, res);
@@ -22,9 +17,9 @@ exports.createLesson = async (req, res) => {
 
 exports.getLesson = async (req, res) => {
     try {
-        const   id_date = req.params.id,
-                month = await Shedule.nDate.findById(id_date),
-                docs = await Shedule.Lesson.find({ id_date });
+        let id_date = req.params.id,
+            month = await Shedule.nDate.findById(id_date),
+            docs = await Shedule.Lesson.find({ id_date });
 
         res.render('lesson', { id_date, month, docs });
     } catch (err) {
@@ -36,13 +31,13 @@ exports.updateLesson = async (req, res) => {
 try {
         admin.checkReqBody(req, res);
 
-        const   { _id, time_start, time_end, title, desc } = req.body,
-                docs = await Shedule.Lesson.updateOne({ _id }, {
-                    time_start,
-                    time_end,
-                    title,
-                    desc
-                });
+        let { _id, time_start, time_end, title, desc } = req.body,
+            docs = await Shedule.Lesson.updateOne({ _id }, {
+                time_start,
+                time_end,
+                title,
+                desc
+            });
 
         admin.sendResult(res, docs, 'The selected lesson has updated');
     } catch (err) {
@@ -52,8 +47,8 @@ try {
 
 exports.deleteLesson = async (req, res) => {
     try {
-        const   _id = req.params.id,
-                docs = await Shedule.Lesson.deleteOne({ _id });
+        let _id = req.params.id,
+            docs = await Shedule.Lesson.deleteOne({ _id });
 
         admin.sendResult(res, docs, 'The selected lesson has deleted');
     } catch (err) {
@@ -63,8 +58,8 @@ exports.deleteLesson = async (req, res) => {
 
 exports.selectLesson = async (req, res) => {
     try {
-        const   _id = req.params.id,
-                docs = await Shedule.Lesson.findById({ _id });
+        let _id = req.params.id,
+            docs = await Shedule.Lesson.findById({ _id });
 
         admin.sendResult(res, docs, 'The selected lesson is found');
     } catch (err) {

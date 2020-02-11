@@ -4,11 +4,11 @@ const   User = require('../models/user'),
 
 exports.getIndex = async (req, res) => {
     try {
-        var checkAdmin,
+        let checkAdmin,
             year = new Date().getFullYear(),
             currentYear = await Shedule.Year.findOne({ year }),
             docs = await Shedule.Month.find({ id_year: currentYear });
-
+        
         req.session.userId ? checkAdmin = true : checkAdmin = false;
         
         res.render('index', { checkAdmin, docs });
@@ -57,8 +57,8 @@ exports.getDates = async (req, res) => {
     try {
         admin.checkReqBody(req, res);
         
-        const   id_month = req.params.id,
-                docs = await Shedule.nDate.find({ id_month });
+        let id_month = req.params.id,
+            docs = await Shedule.nDate.find({ id_month });
                 
         admin.sendResult(res, docs, 'Dates of the selected month is found');
     } catch (err) {
@@ -68,8 +68,8 @@ exports.getDates = async (req, res) => {
 
 exports.getLessons = async (req, res) => {
     try {
-        const   id_date = req.params.id,
-                docs = await Shedule.Lesson.find({ id_date });
+        let id_date = req.params.id,
+            docs = await Shedule.Lesson.find({ id_date });
         
         admin.sendResult(res, docs, 'Lessons of the selected date is found');
     } catch (err) {
