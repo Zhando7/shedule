@@ -21,7 +21,7 @@ exports.getDate = async (req, res) => {
                 year = await Shedule.Month.findOne({ _id: id_month }),
                 foundDates = await Shedule.nDate.find({ id_month }),
                 docs = formatingDates.call(foundDates);
-        
+                console.log(docs);
         res.render('date', { year, id_month, docs })
     } catch (err) {
         admin.sendError(err, res);
