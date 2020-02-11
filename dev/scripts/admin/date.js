@@ -64,9 +64,9 @@ document.getElementById("submitCreateDate").addEventListener("click", function(e
         var xhr = new XMLHttpRequest(), // the XHR class instance creation
             url = "/admin/date",
             id_month = document.getElementById("tableDate").getAttribute("value"),
-            full_date = new Date(datePicker.value),
+            full_date = datePicker.value,
             data = JSON.stringify({ id_month, full_date });
-       
+        
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.addEventListener("load", function() {
