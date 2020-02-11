@@ -66,7 +66,7 @@ document.getElementById("submitCreateDate").addEventListener("click", function(e
             id_month = document.getElementById("tableDate").getAttribute("value"),
             full_date = datePicker.value,
             data = JSON.stringify({ id_month, full_date });
-        console.log(full_date, data);
+        
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.addEventListener("load", function() {
