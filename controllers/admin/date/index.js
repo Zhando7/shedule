@@ -8,7 +8,7 @@ exports.createDate = async (req, res) => {
         const   { id_month, full_date } = req.body,
                 createNewDate = new Shedule.nDate({ id_month, full_date }),
                 docs = await createNewDate.save();
-
+        console.log(docs);
         admin.sendResult(res, docs);
     } catch (err) {
         admin.sendError(err, res);
