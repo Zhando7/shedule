@@ -10,8 +10,4 @@ indexRouter.get('/logout', indexController.logOut);
 indexRouter.get('/view/dates/:id', indexController.getDates);
 indexRouter.get('/view/lessons/:id', indexController.getLessons);
 
-indexRouter.get('/myerror', async (req, res, next) => {
-    return next(new Error("Something is broke!"))
-})
-
 module.exports = indexRouter;

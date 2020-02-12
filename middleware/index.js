@@ -67,12 +67,15 @@ module.exports = (app, express) => {
     /*
     * Error handlers
     */
-    app.use(function(req, res, next) {
-        res.status(404);
-        return res.render('error', { message: 'Not found' });
+    app.use((req, res, next) => {
+        next(new Error(404));
     });
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        return res.render('error', { message: err.message });
-    });
+
+    app.use((err, req, res, next) => {
+        res.status( err.status || 500 );
+        res.render('error', {
+            message: err.message,
+            stack: ( process.env.NODE_ENV == "dev") ? err.stack : "production"
+        })
+    })
 }
