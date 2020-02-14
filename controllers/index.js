@@ -4,13 +4,11 @@ const   User = require('../models/user'),
 
 exports.getIndex = async (req, res) => {
     try {
-        let checkAdmin,
+        let checkAdmin = req.session.userId ? true : false,
             year = new Date().getFullYear(),
             currentYear = await Shedule.Year.findOne({ year }),
             docs = await Shedule.Month.find({ id_year: currentYear });
-        
-        req.session.userId ? checkAdmin = true : checkAdmin = false;
-        
+                
         res.render('index', { checkAdmin, docs });
     } catch (err) {
         admin.sendError(err, res);
@@ -55,8 +53,6 @@ exports.logOut = (req, res) => {
 
 exports.getDates = async (req, res) => {
     try {
-        admin.checkReqBody(req, res);
-        
         let id_month = req.params.id,
             docs = await Shedule.nDate.find({ id_month });
                 
