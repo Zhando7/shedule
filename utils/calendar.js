@@ -21,9 +21,8 @@ exports.createDatesOfMonth = (data) => {
 */
 function createCell(j) {
     var attribId = `id="${this[j]._id}"`,
-        attribOnClick = `onclick="getLessons('${this[j]._id}')"`,
         dateValue = new Date(this[j].full_date).getDate(),
-        cell = `<td ${attribId} ${attribOnClick}>${dateValue}</td>`;
+        cell = `<td ${attribId}><a href="/admin/lessons/${this[j]._id}">${dateValue}</a></td>`;
 
     return cell;
 }
