@@ -35,7 +35,7 @@ document.getElementById("submitLogin").addEventListener("click", function(e) {
         password = form.elements["user_pass"].value;
 
     if(checkValue(name, password)) {
-        var url = "/login",
+        let url = "/login",
             xhr = new XMLHttpRequest(),
             data = JSON.stringify({ name, password });
 
@@ -98,7 +98,7 @@ function findSelectMonth(el, id) {
 * The function for deleting 
 */
 function createCalendar(elem, docs) {
-    let table = '<table class="striped centered"><thead><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th></tr></thead><tbody><tr>',
+    var table = '<table class="striped centered"><thead><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th></tr></thead><tbody><tr>',
         firstDay = new Date(docs[0].full_date).getDay(),
         j = 0;
     
