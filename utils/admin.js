@@ -2,7 +2,7 @@ const   User = require('../models/user'),
         conf = require('../config');
 
 exports.createAdmin = () => {
-    let admin = new User();
+    var admin = new User();
 
     admin.name = conf.admin.name;
     admin.setPassword(conf.admin.password);
