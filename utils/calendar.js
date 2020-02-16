@@ -1,5 +1,5 @@
 /*
-* filling the desired month with dates
+* filling the desired month with dates `controllers -> month -> createMonth()`
 */
 exports.createDatesOfMonth = (data) => {
     var d = new Date( data.year, data.month - 1 ),
