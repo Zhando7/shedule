@@ -1,7 +1,13 @@
 <%- include("layout/header.ejs"); %>
 <style>
-    .__month-edit {
+    .__month-edit, .dates {
         display: none;
+    }
+    td {
+        cursor: pointer;
+    }
+    #tableDates td:hover {
+        background-color: #64b5f6;
     }
 </style>
 <div class="main">
@@ -91,12 +97,11 @@
                                         <%= iterator._id %>
                                     </td>
                                     <!-- ячейка со значением месяца -->
-                                    <td id="td__<%= iterator._id %>">
-                                        <a href="/admin/date/<%= iterator._id %>"><%= iterator.month.title %></a>
+                                    <td onclick="getDatesOfMonth('<%= iterator._id %>', '<%= iterator.month.title %>')">
+                                        <%= iterator.month.title %>
                                     </td>
                                     <!-- ячейка с операциями -->
                                     <td>
-                                        <a onclick="editSelectMonth('<%= iterator._id %>')" class="editLink waves-effect waves-light btn"><i class="small material-icons">edit</i></a>
                                         <a onclick="delSelectMonth('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
                                     </td>
                                 </tr>
@@ -107,47 +112,25 @@
                 <!-- end point `таблица со списком месяцев` -->
             </div>
 
-            <div class="row __month-edit">
-                <!-- Заголовок формы -->
-                <div class="col s12 m12">
-                    <h2 class="left-align">Форма изменения данных</h2>
-                </div>
-                <!-- end point `заголовок формы` -->
-
-                <!-- Форма редактирования -->
-                <form name="editForm" class="col s12 m12">
-                    <div class="row">
-                        <div class="input-field col s12 m12">
-                            <select class="browser-default">
-                                <option value="" disabled selected>Выберите месяц</option>
-                                <option value="1">Январь</option>
-                                <option value="2">Февраль</option>
-                                <option value="3">Март</option>
-                                <option value="4">Апрель</option>
-                                <option value="5">Май</option>
-                                <option value="6">Июнь</option>
-                                <option value="7">Июль</option>
-                                <option value="8">Август</option>
-                                <option value="9">Сентябрь</option>
-                                <option value="10">Октябрь</option>
-                                <option value="11">Ноябрь</option>
-                                <option value="12">Декабрь</option>
-                            </select>
-                        </div>
-                        <div class="submit-field col s12 m12">
-                            <button id="submitEditMonth" class="btn waves-effect waves-light" type="submit" name="action">Сохранить
-                                <i class="material-icons right">send</i>
-                            </button>
-                            <button class="waves-effect waves-light btn" type="reset">Сбросить</button>
-                            <button onclick="triggerForm()" class="waves-effect waves-light btn" type="reset">Не изменять данные</button>
-                        </div>
-                    </div>
-                </form>
-                <!-- End point `форма редактирования` -->
-            </div>
         </section>
         <!-- End point `cписок месяцев` -->
         
+        <!-- Таблица с датами выбранного месяца -->
+        <section class="dates">
+            <div class="row __dates">
+                <!-- Заголовок формы -->
+                <div class="col s12 m12">
+                    <h3 id="nameMonth" class="left-align"></h3>
+                </div>
+                <!-- end point `заголовок формы` -->
+            </div>
+            <div class="row __dates">
+                <div class="col s12 m12">
+                    <div id="tableDates" class="z-depth-1" style="overflow-x:auto;"></div>
+                </div>
+            </div>
+        </section>
+        <!-- End point `Таблица с датами выбранного месяца` -->
     </div>
 </div>
 
