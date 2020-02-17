@@ -18,9 +18,10 @@ exports.createLesson = async (req, res) => {
 exports.getLesson = async (req, res) => {
     try {
         let id_date = req.params.id,
-            month = await Shedule.nDate.findById(id_date),
-            docs = await Shedule.Lesson.find({ id_date });
-
+            docs = await Shedule.Lesson.find({ id_date }),
+            date = await Shedule.nDate.findById({ _id: id_date }),
+            month = await Shedule.Month.findById({ _id: date.id_month });
+            
         res.render('lesson', { id_date, month, docs });
     } catch (err) {
         admin.sendError(err, res);
