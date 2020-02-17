@@ -66,21 +66,12 @@ function addRowToTable(idHtmlElement) {
     // setting the required attributes
     row.setAttribute("id", `tr__${this._id}`);
     cellId.setAttribute("class", "hide-on-small-only")
-    cellMonth.setAttribute("id", `td__${this._id}`);
+    cellMonth.setAttribute("onclick", `getDatesOfMonth("${this._id}", "${this.month.title}")`);
 
     // filling the cells with the entered values
     cellId.innerHTML = `${this._id}`;
-    cellMonth.innerHTML = `<a href="/admin/date/${this._id}">${this.month.title}</a>`;
-    cellOperation.innerHTML = getOperation.call(this);
-}
-
-function getOperation() {
-    var { _id } = this,
-        opEdit = `<a onclick="editSelectMonth('${_id}')" class="waves-effect waves-light btn"><i class="editLink small material-icons">edit</i></a>`,
-        opDelete = `<a onclick="delSelectMonth('${_id}')" class="waves-effect waves-light btn"><i class="small material-icons">delete</i></a>`,
-        op = opEdit + " " + opDelete;
-    
-    return op;
+    cellMonth.innerHTML = `${this.month.title}`;
+    cellOperation.innerHTML = `<a onclick="delSelectMonth('${this._id}')" class="waves-effect waves-light btn"><i class="small material-icons">delete</i></a>`;
 }
 
 // to delete the selected year
@@ -98,6 +89,7 @@ function delSelectMonth(id) {
                 
             if(xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById(`tr__${id}`).remove();
+                document.getElementsByClassName("dates")[0].style.display = "none";
             } else {
                 console.log(json.msg);
             }
@@ -110,30 +102,22 @@ function delSelectMonth(id) {
 }
 
 /*
-* Editing the selected month
+* For interacting with dates
 */
-function editSelectMonth(id) {
+function getDatesOfMonth(id, monthName) {
     if(id) {
-        let url = `/admin/month/select/${id}`,
-            xhr = new XMLHttpRequest();     // the XHR class instance creation
-
-        // to send a request to get the selected year
+        let url = `/admin/dates/${id}`,
+            xhr = new XMLHttpRequest();     // the XHR class instace creation
+        
         xhr.open("GET", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.addEventListener("load", function() {
-            // receive and parse the server response
             var json = JSON.parse(xhr.response);
-            
-            if(xhr.readyState == 4 && xhr.status == 200) {
-                /*
-                * to set the attribute and value of the `select` HTML element
-                */
-                let selectEditForm = document.forms["editForm"].querySelector("select");
-                
-                document.forms["editForm"].setAttribute("value", json.docs._id);
-                selectEditForm.selectedIndex = json.docs.month.number;
 
-                triggerForm(true);  // to show the `editForm` HTML element of the selected year
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementsByClassName("dates")[0].style.display = "block";
+                document.getElementById("nameMonth").innerHTML = monthName + " месяц";
+                document.getElementById("tableDates").innerHTML = json.docs;
             } else {
                 console.log(json.msg);
             }
@@ -144,65 +128,3 @@ function editSelectMonth(id) {
         return null;
     }
 }
-
-function triggerForm(bool, id = null, month = null) {
-    var rowYear = document.getElementsByClassName("__month"),
-        editForm = document.getElementsByClassName("__month-edit");
-
-    function displayRowMonth(v) {
-        for(let i = 0; i < rowYear.length; i++ ) {
-            rowYear[i].style.display = v;
-        }
-    }
-
-    switch(bool) {
-        case true: {
-            displayRowMonth("none");
-            editForm[0].style.display = "block";
-            break;
-        }
-        case false: {
-            editForm[0].style.display = "none";
-            displayRowMonth("block");
-            document.getElementById(`td__${id}`).innerHTML = `<a href="/admin/date/${id}">${month}</a>`;
-            break;
-        }
-        default: {
-            editForm[0].style.display = "none";
-            displayRowMonth("block");
-            break;
-        }
-    }
-}
-
-document.getElementById("submitEditMonth").addEventListener("click", function(e) {
-    e.preventDefault();
-
-    var form = document.forms["editForm"].querySelector("select"),
-        _id = document.forms["editForm"].getAttribute("value"),
-        month = {
-            number: form.selectedIndex,
-            title: form.options[form.selectedIndex].label
-        };
-    
-    if(checkValue(month.number)) {
-        let url = "/admin/month",
-            data = JSON.stringify({ _id, month }),
-            xhr = new XMLHttpRequest();     // the XHR class instance creation
-
-        xhr.open("PUT", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.addEventListener("load", function() {
-            // receive and parse the server response
-            var json = JSON.parse(xhr.response);
-
-            if(xhr.readyState == 4 && xhr.status == 200) {
-                triggerForm(false, _id, month.title);
-            } else {
-                console.log(json.msg);
-            }
-        });
-
-        xhr.send(data);
-    }
-});
