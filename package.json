@@ -12,7 +12,7 @@
     "url": "git+https://github.com/Zhando7/shedule.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Akhmetkarimov Zhandos",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Zhando7/shedule/issues"
@@ -39,7 +39,6 @@
     "gulp-cssnano": "^2.1.3",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2",
-    "js-yaml": ">=3.13.1",
     "nodemon": "^2.0.1"
   },
   "engines": {
