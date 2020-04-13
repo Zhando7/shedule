@@ -100,15 +100,15 @@ $ npm start
 Организованна на [MVC-паттерне](https://ru.wikipedia.org/wiki/Model-View-Controller).
 
 + **/config** - папка с конфигурационным файлом;
-+ **/controllers** - выполнение бизнес-логики на стороне *сервера*;
-    + /admin - CRUD-операции администратора
-        + /date 
-        + /lesson
-        + /month 
-        + /year 
++ **/controllers** - выполнение бизнес-логики на стороне *сервера*:
+    + /admin - CRUD-операции администратора:
+        + /date/index.js 
+        + /lesson/index.js 
+        + /month/index.js 
+        + /year/index.js 
     + index.js - обработчик запросов на стороне сервера
-+ **/dev** - выполнение бизнес-логики на стороне *клиента*;
-    + /admin - CRUD-операции администратора
++ **/dev** - выполнение бизнес-логики на стороне *клиента*:
+    + /admin - CRUD-операции администратора:
         + date.js
         + lesson.js
         + month.js
