@@ -12,7 +12,7 @@ mongoose.connection
     .on('close', () => console.log('Database connection is closed!'))
     .on('open', () => {
         const info = mongoose.connections[0];
-        console.log(`Mongoose is connected to ${info.host}:${conf.PORT}/${info.name}`);
+        console.log(`Mongoose is connected to ${info.host}:${conf.PORT}`);
     });
 
 module.exports = mongoose;
