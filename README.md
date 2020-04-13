@@ -3,6 +3,14 @@
 Это простой проект разработанный на Node.js, Express.js и MongoDB.\
 Для просмотра нажмите [сюда](http://innovation-center.herokuapp.com/).
 
+## Содержимое
+
+1. [Необходимые программы](#необходимые-программы)
+    * [Установка Node.js](#установка-node.js)
+    * [Установка Git](#установка-git)
+    * [Установка MongoDB](#установка-mongodb)
+2. [Установка и запуск проекта](#установка-и-запуск-проекта)
+
 ## Необходимые программы
 
 Нормальный запуск проекта обеспечивают:
@@ -35,7 +43,7 @@ $ git version
 git version 2.26.0.windows.1
 ```
 
-### Установка MongoDB
+#### Установка MongoDB
 
 Для загрузки перейдите на официальный сайт [*https://www.mongodb.com/download-center/community*](https://www.mongodb.com/download-center/community).
 
