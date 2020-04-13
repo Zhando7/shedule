@@ -99,6 +99,8 @@ $ npm start
 
 Организованна на [MVC-паттерне](https://ru.wikipedia.org/wiki/Model-View-Controller).
 
+![App structure](https://i.ibb.co/BcG0H9S/app-structure.png)
+
 + **/config** - папка с конфигурационным файлом;
 + **/controllers** - выполнение бизнес-логики на стороне *сервера*:
     + /admin - CRUD-операции администратора:
