@@ -10,6 +10,7 @@
     * [Установка Git](#установка-git)
     * [Установка MongoDB](#установка-mongodb)
 2. [Запуск проекта](#запуск-проекта)
+3. [Структура](#структура)
 
 ## Необходимые программы
 
@@ -93,3 +94,71 @@ $ npm start
 ```
 
 Для просмотра результата, перейдите в браузере на [*http://localhost:3000/*](http://localhost:3000/)
+
+## Структура
+
+Организованна на [MVC-паттерне](https://ru.wikipedia.org/wiki/Model-View-Controller).
+
++ **/config** - папка с конфигурационным файлом;
++ **/controllers** - выполнение бизнес-логики на стороне *сервера*;
+    + /admin - CRUD-операции администратора
+        + /date 
+        + /lesson
+        + /month 
+        + /year 
+    + index.js - обработчик запросов на стороне сервера
++ **/dev** - выполнение бизнес-логики на стороне *клиента*;
+    + /admin - CRUD-операции администратора
+        + date.js
+        + lesson.js
+        + month.js
+        + year.js
+    + main.js - обработчик запросов на стороне клиента
++ **/middleware** - промежуточные компоненты;
++ **/models** - модели баз данных:
+    + /shedule - расписание;
+    + /user - администратор;
++ **/public** - папка статических активов (CSS, клиентский код JavaScript) передаваемых клиенту;
++ **/routes** - обработчик запросов http:
+```
+// routes/admin.js
+
+const express = require('express');
+const adminRouter = express.Router();
+const adminController = require('../controllers/admin');
+
+adminRouter.post('/month', adminController.month.createMonth);
+adminRouter.get('/month/:id', adminController.month.getMonth);
+adminRouter.put('/month', adminController.month.updateMonth);
+adminRouter.delete('/month/:id', adminController.month.deleteMonth);
+...
+```
++ **/utils** - здесь хранятся переиспользуемые утилиты:
+    + admin.js - обработка тела запросов, отправка обработанных результатов или ошибок в ответ клиенту;
+    + calendar.js - создание календаря;
+    + mongoose.js - подключение к БД.
++ **/views** - шаблоны, используемые для генерирования страниц;
++ **.env** - содержит настройки окружения проекта;
+```
+#Environment prod || dev
+NODE_ENV=prod
+
+#Port
+PORT=3000
+
+#DataBase
+MONGO_URL=mongodb://localhost:27017/
+```
++ **app.js** - файл подготовки приложения, сюда идет весь основной код:
+```
+const express = require('express'),
+    app = express(),
+    conf = require('./config'),
+    middleware = require('./middleware')(app, express);
+
+app.listen(conf.PORT, () => {
+    console.log(`Express server listening on port:${conf.PORT}`)
+});
+```
++ **gulpfile.js** - транспилирует JavaScript файлы из */dev* в */public*
++ **package.json** - файл со списком зависимостей и командой запуска приложения;
