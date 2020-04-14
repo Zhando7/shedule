@@ -1,5 +1,5 @@
 const   Shedule = require('../../../models/shedule'),
-        admin = require('../../../utils/admin'),
+        server = require('../../../utils/server'),
         calendar = require('../../../utils/calendar');
 
 exports.getDates = async (req, res) => {
@@ -8,8 +8,8 @@ exports.getDates = async (req, res) => {
             lessons = await Shedule.nDate.find({ id_month }),
             docs = calendar.createCalendar(lessons);
 
-        admin.sendResult(res, docs, 'The dates of the selected month is found');
+        server.sendResult(res, docs, 'The dates of the selected month is found');
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }

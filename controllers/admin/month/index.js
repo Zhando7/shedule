@@ -1,10 +1,10 @@
 const   Shedule = require('../../../models/shedule'),
-        admin = require('../../../utils/admin'),
+        server = require('../../../utils/server'),
         calendar = require('../../../utils/calendar');
 
 exports.createMonth = async (req, res) => {
     try {
-        admin.checkReqBody(req, res);
+        server.checkReqBody(req, res);
 
         let { id_year, month } = req.body,
             newMonth = new Shedule.Month({ id_year, month }),
@@ -19,9 +19,9 @@ exports.createMonth = async (req, res) => {
         
         await Shedule.nDate.insertMany(dates);
         
-        admin.sendResult(res, docs);
+        server.sendResult(res, docs);
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }
 
@@ -32,20 +32,20 @@ exports.getMonth = async (req, res) => {
 
         res.render('month', { id_year, docs });
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }
 
 exports.updateMonth = async (req, res) => {
     try {
-        admin.checkReqBody(req, res);
+        server.checkReqBody(req, res);
 
         let { _id, month } = req.body,
             docs = await Shedule.Month.updateOne({ _id }, { month });
         
-        admin.sendResult(res, docs, `The selected month has updated`);
+        server.sendResult(res, docs, `The selected month has updated`);
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }
 
@@ -61,9 +61,9 @@ exports.deleteMonth = async (req, res) => {
         
         await Shedule.nDate.deleteMany({ id_month: _id });
         
-        admin.sendResult(res, docs, 'The selected month has deleted');
+        server.sendResult(res, docs, 'The selected month has deleted');
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }
 
@@ -72,8 +72,8 @@ exports.selectMonth = async (req, res) => {
         let _id = req.params.id,
             docs = await Shedule.Month.findById(_id);
 
-        admin.sendResult(res, docs, 'The selected month is found');
+        server.sendResult(res, docs, 'The selected month is found');
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }
