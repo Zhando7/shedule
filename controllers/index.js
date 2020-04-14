@@ -1,6 +1,6 @@
 const   User = require('../models/user'),
         Shedule = require('../models/shedule'),
-        admin = require('../utils/admin');
+        server = require('../utils/server');
 
 exports.getIndex = async (req, res) => {
     try {
@@ -11,12 +11,15 @@ exports.getIndex = async (req, res) => {
                 
         res.render('index', { checkAdmin, docs });
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }
 
 exports.logIn = (req, res) => {
-    User.findOne({ 'name': req.body.name }, (err, doc) => {
+    let name = req.body.name;
+    
+    User.findOne({ name }, (err, doc) => {
+        if(err) throw err;
         if(doc === null) {
             return res.status(400).json({
                 msg: 'Пользователь с таким именем не найден'
@@ -56,9 +59,9 @@ exports.getDates = async (req, res) => {
         let id_month = req.params.id,
             docs = await Shedule.nDate.find({ id_month });
                 
-        admin.sendResult(res, docs, 'Dates of the selected month is found');
+        server.sendResult(res, docs, 'Dates of the selected month is found');
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }
 
@@ -67,8 +70,8 @@ exports.getLessons = async (req, res) => {
         let id_date = req.params.id,
             docs = await Shedule.Lesson.find({ id_date });
         
-        admin.sendResult(res, docs, 'Lessons of the selected date is found');
+        server.sendResult(res, docs, 'Lessons of the selected date is found');
     } catch (err) {
-        admin.sendError(err, res);
+        server.sendError(err, res);
     }
 }
