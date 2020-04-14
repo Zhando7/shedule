@@ -23,7 +23,7 @@ exports.checkReqBody = (req, res) => {
     });
 }
 
-exports.sendResult = (res, docs, msg = 'Document had successfully created') => {
+exports.sendResult = (res, docs, msg = 'Document has successfully created') => {
     res.status(200).json({
         status: 200,
         msg: msg,
