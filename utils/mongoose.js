@@ -4,7 +4,7 @@ conf = require('../config'),
  * Database connection
  */
 mongoose.Promise = global.Promise;
-mongoose.set('debug', ( conf.IS_PRODUCTION == 'prod' ) ? false : true );
+mongoose.set('debug', ( conf.IS_PRODUCTION === 'dev' ) ? true : false );
 
 mongoose.connect(`${conf.MONGO_URL}`, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.connection
