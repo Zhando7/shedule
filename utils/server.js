@@ -1,18 +1,23 @@
 const   User = require('../models/user'),
         conf = require('../config');
-
+        
 exports.createAdmin = () => {
-    var admin = new User();
+    User.find({name: conf.admin.name}, (err, doc) => {
+        if(err) console.log(err);
+        if(doc.length == 0) {
+            var admin = new User();
 
-    admin.name = conf.admin.name;
-    admin.setPassword(conf.admin.password);
+            admin.name = conf.admin.name;
+            admin.setPassword(conf.admin.password);
 
-    admin.save((err, doc) => {
-        if(err) {
-            console.log(`${err}`);
-        }
-        else {
-            console.log(`Admin is created`);
+            admin.save((err, doc) => {
+                if(err) {
+                    console.log(`${err}`);
+                }
+                else {
+                    console.log(`Admin is created`);
+                }
+            });
         }
     });
 }
