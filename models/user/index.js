@@ -1,12 +1,8 @@
 const   mongoose = require('mongoose'),
-        fs = require('fs'),
         crypto = require('crypto'),
         Schema = mongoose.Schema;
 
-const raw = fs.readFile('schema.json', (err, data) => {
-    if(err) return err;
-    return data.toString();
-});
+const raw = require('./schema.json')
 
 // create a schema
 const userSchema = Schema(raw, { versionKey: false });
