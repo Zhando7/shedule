@@ -3,7 +3,7 @@ const   year = require('./year'),
         date = require('./date'),
         lesson = require('./lesson'),
         Shedule = require('../../models/shedule'),
-        admin = require('../../utils/admin');
+        server = require('../../utils/server');
 
 module.exports = {
     year: year,
@@ -16,7 +16,7 @@ module.exports = {
             
             res.render('admin', { docs });
         } catch (err) {
-            admin.sendError(err, res, 'Years not found');
+            server.sendError(err, res, 'Year not found');
         }
     }
 }
