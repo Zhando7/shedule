@@ -6,7 +6,7 @@ module.exports = (app, express) => {
             staticAsset = require('static-asset'),
             
             mongoose = require('../utils/mongoose'),
-            admin = require('../utils/admin'),
+            server = require('../utils/server'),
             session = require('express-session'),
             MongoStore = require('connect-mongo')(session),
             checkAuth = require('./checkAuth'),
@@ -15,9 +15,9 @@ module.exports = (app, express) => {
             indexRouter = require('../routes');
 
     /*
-    * Creating admin on default
+    * Default admin creation
     */
-    admin.createAdmin();
+    server.createAdmin();
 
     /*
     * Page rendering
@@ -31,7 +31,7 @@ module.exports = (app, express) => {
     app.use(bodyParser.urlencoded({ extended: true }));
 
     /*
-    * Body limit is 10
+    * Body limit is 10kb
     */
     app.use(express.json({ limit: '10kb' }));
 
@@ -48,7 +48,7 @@ module.exports = (app, express) => {
     app.use(session({
         secret: conf.session.secret,
         resave: true,  //don't save session if unmodified
-        saveUninitialized: false,   // A session that is "uninitialized" to be saved to the store
+        saveUninitialized: false,   // a session that is "uninitialized" to be saved to the store
         cookie: conf.session.cookie,
         store: new MongoStore({ 
             mongooseConnection: mongoose.connection,
@@ -75,7 +75,7 @@ module.exports = (app, express) => {
         res.status( err.status || 500 );
         res.render('error', {
             message: err.message,
-            stack: ( process.env.NODE_ENV == "dev") ? err.stack : "production"
+            stack: ( process.env.NODE_ENV === "dev") ? err.stack : "production"
         })
     })
 }
