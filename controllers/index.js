@@ -57,7 +57,7 @@ exports.logOut = (req, res) => {
 exports.getDates = async (req, res) => {
     try {
         let id_month = req.params.id,
-            docs = await Shedule.nDate.find({ id_month });
+            docs = await Shedule.nDate.find({ id_month }).sort({ full_date: 1});
                 
         server.sendResult(res, docs, 'Dates of the selected month is found');
     } catch (err) {

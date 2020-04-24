@@ -5,7 +5,7 @@ const   Shedule = require('../../../models/shedule'),
 exports.getDates = async (req, res) => {
     try {
         let id_month = req.params.id,
-            lessons = await Shedule.nDate.find({ id_month }),
+            lessons = await Shedule.nDate.find({ id_month }).sort({ full_date: 1}),
             docs = calendar.createCalendar(lessons);
 
         server.sendResult(res, docs, 'The dates of the selected month is found');
