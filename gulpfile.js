@@ -13,10 +13,9 @@ var path = {
     },
     scripts: {
         src: [ 
-            './dev/scripts/*.js',
+            './dev/scripts/main.js',
             './dev/scripts/admin/year.js',
             './dev/scripts/admin/month.js',
-            './dev/scripts/admin/date.js',
             './dev/scripts/admin/lesson.js'
         ],
         dest: './public/javascripts/'
@@ -32,7 +31,7 @@ function styles() {
     .pipe(gulp.dest(path.styles.dest));
 }
 
-function scripts() {
+function main() {
     return gulp
     .src(path.scripts.src[0])
     .pipe(babel({
@@ -65,20 +64,9 @@ function month() {
     .pipe(gulp.dest(path.scripts.dest));
 }
 
-function date() {
-    return gulp
-    .src(path.scripts.src[3])
-    .pipe(babel({
-        presets: ['@babel/preset-env']
-    }))
-    .pipe(uglify())
-    .pipe(concat('date.min.js'))
-    .pipe(gulp.dest(path.scripts.dest));
-}
-
 function lesson() {
     return gulp
-    .src(path.scripts.src[4])
+    .src(path.scripts.src[3])
     .pipe(babel({
         presets: ['@babel/preset-env']
     }))
@@ -87,4 +75,4 @@ function lesson() {
     .pipe(gulp.dest(path.scripts.dest));
 }
 
-exports.default = gulp.series(gulp.parallel(styles, scripts, year, month, date, lesson));
+exports.default = gulp.series(gulp.parallel(main, year, month, lesson));
