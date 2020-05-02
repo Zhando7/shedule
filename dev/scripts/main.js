@@ -1,4 +1,4 @@
-console.log('Hello');
+;console.log('Hello user');
 
 /*
 * Initialization of the modals boxes
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 * Authorization
 */
 function checkValue(n, p) {
-    if(n && p) {
+    if(typeof n !== "undefined" && typeof p !== "undefined") {
         return true;
     } else {
         M.toast({ html: "Заполните все поля!" });
@@ -59,13 +59,13 @@ document.getElementById("submitLogin").addEventListener("click", function(e) {
 * Functions for interacting with months, dates and lessons
 */
 
-function checkExistsDates(el){
-    if(this && el) {
-        if(this.docs.length) {
-            createCalendar(el, this.docs)
+function checkExistsDates(json, el){
+    if(typeof json.docs !== "undefined") {
+        if(json.docs.length > 0) {
+            createCalendar(el, json.docs)
         } else {
             document.getElementById("calendar").style.display = "none";
-            M.toast({ html: "Данный месяц не заполнен датами" });
+            M.toast({ html: "Выбранный месяц не заполнен датами" });
         } 
     }
 }
@@ -73,7 +73,7 @@ function checkExistsDates(el){
 function findSelectMonth(el, id) {
     document.getElementById("tableLessons").style.display = "none";
     
-    if(el && id) {
+    if(typeof el !== "undefined" && typeof id !== "undefined") {
         let url = `/view/dates/${id}`,
             xhr = new XMLHttpRequest();
         
@@ -83,7 +83,7 @@ function findSelectMonth(el, id) {
             var json = JSON.parse(xhr.response);
 
             if(xhr.readyState == 4 && xhr.status == 200) {
-                checkExistsDates.call(json, el);
+                checkExistsDates(json, el);
             } else {
                 console.log(json.msg);
             }
@@ -113,7 +113,7 @@ function createCalendar(elem, docs) {
     // <td> ячейки календаря с датами
     while( j < docs.length ) {
         if( new Date(docs[j].full_date).getDay() != 0 ) {
-            table += createCell.call(docs, j);
+            table += createCell(docs, j);
         }
         
         if( new Date(docs[j].full_date).getDay() == 6 && j < ( docs.length - 1)) {
@@ -128,10 +128,10 @@ function createCalendar(elem, docs) {
     document.getElementById(`${elem}`).style.display = "block";
 }
 
-function createCell(i) {
-    var attribId = `id="${this[i]._id}"`,
-        attribOnClick = `onclick="getLessons('${this[i]._id}')"`,
-        dateValue = new Date(this[i].full_date).getDate(),
+function createCell(docs, i) {
+    var attribId = `id="${docs[i]._id}"`,
+        attribOnClick = `onclick="getLessons('${docs[i]._id}')"`,
+        dateValue = new Date(docs[i].full_date).getDate(),
         cell = `<td ${attribId} ${attribOnClick}>${dateValue}</td>`;
 
     return cell;
@@ -144,8 +144,8 @@ function createCell(i) {
 * Lessons
 */
 function getLessons(id) {
-    if(id) {
-        let url = `/view/lessons/${id}`,
+    if(typeof id !== "undefined") {
+        var url = `/view/lessons/${id}`,
             xhr = new XMLHttpRequest();
         
         xhr.open("GET", url, true);
@@ -155,7 +155,7 @@ function getLessons(id) {
 
             if(xhr.readyState == 4 && xhr.status == 200) {
                 if(json.docs.length) {
-                    createLessonsTable.call(json.docs)
+                    createLessonsTable(json.docs);
                 } else {
                     document.getElementById("tableLessons").style.display = "none";
                     M.toast({ html: "Уроков на эту дату не имеется" });
@@ -170,9 +170,9 @@ function getLessons(id) {
     }
 }
 
-function createLessonsTable() {
-    if(this) {
-        let table = document.getElementById("tableLessons"),
+function createLessonsTable(docs) {
+    if(typeof docs !== "undefined") {
+        var table = document.getElementById("tableLessons"),
             start = `
                 <table class="striped centered">
                 <thead>
@@ -187,12 +187,12 @@ function createLessonsTable() {
             end = `</tbody></table>`,
             i = 0;
         
-        while(i < this.length) {
+        while(i < docs.length) {
             start += `
                 <tr>
-                    <td>${this[i].time_start} - ${this[i].time_end}</td>
-                    <td>${this[i].title}</td>
-                    <td>${this[i].desc}</td>
+                    <td>${docs[i].time_start} - ${docs[i].time_end}</td>
+                    <td>${docs[i].title}</td>
+                    <td>${docs[i].desc}</td>
                 </tr>
             `
             i++;

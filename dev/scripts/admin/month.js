@@ -1,4 +1,4 @@
-console.log("Hello, admin");
+;console.log("Hello, admin");
 
 /*
 * Initialization of the Sidenav
@@ -40,11 +40,11 @@ document.getElementById("submitCreateMonth").addEventListener("click", function(
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.addEventListener("load", function() {
             // receive and parse the server response
-            let json = JSON.parse(xhr.response);
+            var json = JSON.parse(xhr.response);
             
             if(xhr.readyState == 4 && xhr.status == 200) {
                 form.selectedIndex = 0;
-                addRowToTable.call(json.docs, "tableMonth");
+                addRowToTable(json.docs, "tableMonth");
             } else {
                 console.log(json.msg);
             }
@@ -54,30 +54,32 @@ document.getElementById("submitCreateMonth").addEventListener("click", function(
     }
 });
 
-function addRowToTable(idHtmlElement) {
-    var table = document.getElementById(idHtmlElement),
-        row = table.insertRow(table.length);
-    
-    // filling the created row with cells
-    var cellId = row.insertCell(0),
-        cellMonth = row.insertCell(1),
-        cellOperation = row.insertCell(2);
+function addRowToTable(docs, el) {
+    if(typeof docs !== "undefined") {
+        var table = document.getElementById(el),
+            row = table.insertRow(table.length);
+        
+        // filling the created row with cells
+        var cellId = row.insertCell(0),
+            cellMonth = row.insertCell(1),
+            cellOperation = row.insertCell(2);
 
-    // setting the required attributes
-    row.setAttribute("id", `tr__${this._id}`);
-    cellId.setAttribute("class", "hide-on-small-only")
-    cellMonth.setAttribute("onclick", `getDatesOfMonth("${this._id}", "${this.month.title}")`);
+        // setting the required attributes
+        row.setAttribute("id", `tr__${docs._id}`);
+        cellId.setAttribute("class", "hide-on-small-only")
+        cellMonth.setAttribute("onclick", `getDatesOfMonth("${docs._id}", "${docs.month.title}")`);
 
-    // filling the cells with the entered values
-    cellId.innerHTML = `${this._id}`;
-    cellMonth.innerHTML = `${this.month.title}`;
-    cellOperation.innerHTML = `<a onclick="delSelectMonth('${this._id}')" class="waves-effect waves-light btn"><i class="small material-icons">delete</i></a>`;
+        // filling the cells with the entered values
+        cellId.innerHTML = `${docs._id}`;
+        cellMonth.innerHTML = `${docs.month.title}`;
+        cellOperation.innerHTML = `<a onclick="delSelectMonth('${docs._id}')" class="waves-effect waves-light btn"><i class="small material-icons">delete</i></a>`;
+    }
 }
 
 // to delete the selected year
 function delSelectMonth(id) {
     if(id) {
-        let url = `/admin/month/${ id }`,
+        var url = `/admin/month/${ id }`,
             xhr = new XMLHttpRequest();     // the XHR class instance creation
         
         // to send a request to delete the selected year
@@ -85,7 +87,7 @@ function delSelectMonth(id) {
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.addEventListener("load", function () {
             // receive and parse the server response
-            let json = JSON.parse(xhr.response);
+            var json = JSON.parse(xhr.response);
                 
             if(xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById(`tr__${id}`).remove();
@@ -105,8 +107,8 @@ function delSelectMonth(id) {
 * For interacting with dates
 */
 function getDatesOfMonth(id, monthName) {
-    if(id) {
-        let url = `/admin/dates/${id}`,
+    if(typeof id !== "undefined") {
+        var url = `/admin/dates/${id}`,
             xhr = new XMLHttpRequest();     // the XHR class instace creation
         
         xhr.open("GET", url, true);
