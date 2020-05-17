@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function checkValue(year) {
-    if(year == "") {
+    if(!year) {
         M.toast({html: `Заполните поле: "Введите год"`});
     } else if( year >= 2020 && year <= 3000) {
         return true;
