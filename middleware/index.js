@@ -28,7 +28,6 @@ module.exports = (app, express) => {
     * Requests parser
     */
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
 
     /*
     * Body limit is 10kb
@@ -77,5 +76,5 @@ module.exports = (app, express) => {
             message: err.message,
             stack: ( process.env.NODE_ENV === "dev") ? err.stack : "production"
         })
-    })
+    });
 }
