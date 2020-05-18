@@ -4,8 +4,8 @@ const   User = require('../models/user'),
 exports.createAdmin = () => {
     User.find({name: conf.admin.name}, (err, doc) => {
         if(err) console.log(err);
-        if(doc.length == 0) {
-            var admin = new User();
+        if(doc.length === 0) {
+            let admin = new User();
 
             admin.name = conf.admin.name;
             admin.setPassword(conf.admin.password);
@@ -15,9 +15,11 @@ exports.createAdmin = () => {
                     console.log(`${err}`);
                 }
                 else {
-                    console.log(`Admin is created`);
+                    console.log(`Creating the admin...`);
                 }
             });
+        } else {
+            console.log('Admin is already created!')
         }
     });
 }
