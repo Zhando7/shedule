@@ -25,10 +25,10 @@ function CalendarModule() {
         },
         failure: function(title, err) {
             this.errors.push(err);
-            (title) ? console.log(err) : this.showDialog(title, err);
+            this.showDialog(title, err);
         },
         showDialog(title, msg) {
-            M.toast({ html: title + msg });
+            (title) ? console.log(title, msg) : M.toast({ html: msg });
         },
     };
 
