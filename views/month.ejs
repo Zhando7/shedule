@@ -97,12 +97,12 @@
                                         <%= iterator._id %>
                                     </td>
                                     <!-- ячейка со значением месяца -->
-                                    <td onclick="getDatesOfMonth('<%= iterator._id %>', '<%= iterator.month.title %>')">
+                                    <td onclick="month.getDatesOfMonth('<%= iterator._id %>', '<%= iterator.month.title %>')">
                                         <%= iterator.month.title %>
                                     </td>
                                     <!-- ячейка с операциями -->
                                     <td>
-                                        <a onclick="delSelectMonth('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
+                                        <a onclick="month.deleteMonth('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
                                     </td>
                                 </tr>
                             <% } %>
