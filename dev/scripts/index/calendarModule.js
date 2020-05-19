@@ -2,7 +2,7 @@ function CalendarModule() {
     var ServerController = {
         errors: [],
         server: function(url, trigger) {
-            if(url) {
+            if(url && trigger) {
                 let xhr = new XMLHttpRequest();
                 
                 xhr.open("GET", url, true);
@@ -34,7 +34,9 @@ function CalendarModule() {
 
     var MonthController = {
         init: function(idDomElement) {
-            this.idDomElement = idDomElement;
+            if(idDomElement) {
+                this.idDomElement = idDomElement;
+            }
         },
         requestMonth: function(idDomElement, idMonth) {
             if(idDomElement && idMonth) {
