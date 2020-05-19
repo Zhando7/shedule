@@ -79,8 +79,8 @@
                                     </td>
                                     <!-- ячейка с операциями -->
                                     <td>
-                                        <a onclick="editSelectYear('<%= iterator._id %>')" class="editLink waves-effect waves-light btn"><i class="small material-icons">edit</i></a>
-                                        <a onclick="delSelectYear('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
+                                        <a id="editBtn_<%= iterator._id %>" onclick="year.getYear('<%= iterator._id %>', '<%= iterator.year %>')" class="editLink waves-effect waves-light btn"><i class="small material-icons">edit</i></a>
+                                        <a id="deleteBtn_<%= iterator._id %>" onclick="year.deleteYear('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
                                     </td>
                                 </tr>
                             <% } %>
@@ -108,7 +108,7 @@
                                 <i class="material-icons right">send</i>
                             </button>
                             <button class="waves-effect waves-light btn" type="reset">Сбросить</button>
-                            <button onclick="triggerForm()" class="waves-effect waves-light btn" type="reset">Не изменять данные</button>
+                            <a onclick="year.showEditForm()" class="waves-effect waves-light btn">Не изменять данные</a>
                         </div>
                     </div>
                 </form>
