@@ -15,8 +15,8 @@ var path = {
         src: [ 
             './dev/scripts/index/*.js',
             './dev/scripts/admin/year/*.js',
-            './dev/scripts/admin/month.js',
-            './dev/scripts/admin/lesson.js'
+            './dev/scripts/admin/month/*.js',
+            './dev/scripts/admin/lesson/*.js'
         ],
         dest: './public/javascripts/'
     }
