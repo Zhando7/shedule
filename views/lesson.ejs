@@ -92,8 +92,8 @@
                                     </td>
                                     <!-- ячейка с операциями -->
                                     <td>
-                                        <a onclick="editSelectLesson('<%= iterator._id %>')" class="editLink waves-effect waves-light btn"><i class="small material-icons">edit</i></a>
-                                        <a onclick="delSelectLesson('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
+                                        <a onclick="lesson.lessonSelect('<%= iterator._id %>')" class="editLink waves-effect waves-light btn"><i class="small material-icons">edit</i></a>
+                                        <a onclick="lesson.lessonDelete('<%= iterator._id %>')" class="removeLink waves-effect waves-light btn"><i class="small material-icons">delete</i></a>
                                     </td>
                                 </tr>
                             <% } %>
@@ -124,7 +124,7 @@
                                 <i class="material-icons right">send</i>
                             </button>
                             <button class="waves-effect waves-light btn" type="reset">Сбросить</button>
-                            <button onclick="triggerForm()" class="waves-effect waves-light btn" type="reset">Не изменять данные</button>
+                            <a onclick="lesson.triggerForm()" class="waves-effect waves-light btn">Не изменять данные</a>
                         </div>
                     </div>
                 </form>
