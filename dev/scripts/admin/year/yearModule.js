@@ -8,7 +8,7 @@ function YearModule() {
                 xhr.setRequestHeader("Content-Type", "application/json");
                 return xhr;   
             } else {
-                this.failure("", "Ошибка при передаче аргументов в initXHR()");
+                this.failure("", "Ошибка запроса! Переданы не все аргументы.");
             }
         },
         postRequest: function(url, data) {
@@ -108,16 +108,12 @@ function YearModule() {
                     _id: form.getAttribute("attribIdYear"),
                     year: form.getAttribute("attribYear")
                 }
-            } else {
-                this.failure("", "Не найдена форма с указанным идентификатором!");
             }
         },
         clearInput() {
             var form;
             if(form = document.forms["createForm"]){
                 form.elements["year"].value = "";
-            } else {
-                this.failure("", "Форма создания года не существует!");
             }
         },
         createYear: function() {
@@ -151,8 +147,6 @@ function YearModule() {
                form[0].value = year;
 
                this.showEditForm(true);  // to show the `editForm` HTML element to the selected year
-            } else {
-                this.failure("", "Ошибка! Переданы не все аргументы.");
             }
         },
         editYear: function() {
@@ -171,8 +165,6 @@ function YearModule() {
                     let url = "/admin/year";
                     this.putRequest(url, attribs);
                 }
-            } else {
-                this.failure("", "Ошибка! Не удаётся найти необходимые аттрибуты.");
             }
         },
         prepareEditYear: function(docs) {
@@ -187,15 +179,11 @@ function YearModule() {
             if(idYear) {
                 let url = `/admin/year/${idYear}`;
                 this.deleteRequest(url, idYear);
-            } else {
-                this.failure("", "Идентификатор 'IdYear' не получен!");
             }
         },
         prepareDeleteYear: function(idYear) {
             if(idYear) {
                 document.getElementById(`tr__${idYear}`).remove();
-            } else {
-                this.failure("Server error: ", "Идентификатор 'IdYear' не получен!");
             }
         },
         addRowToTable: function(idDomElem, docs) {
@@ -217,8 +205,6 @@ function YearModule() {
                 cellId.innerHTML = `${docs._id}`;
                 cellYear.innerHTML = `<a href="/admin/month/${docs._id}">${docs.year}</a>`;
                 cellOperation.innerHTML = this.initOperationsFields(docs);
-            } else {
-                this.failure("", "Ошибка! Получены не все аргументы.");
             }
         },
         initOperationsFields: function(docs) {
@@ -229,8 +215,6 @@ function YearModule() {
                 op = opEdit + " " + opDelete;
             
                 return op;
-            } else {
-                this.failure("", "Ошибка! Получены не все аргументы.");
             }
         },
         showEditForm: function(bool, idYear = undefined, year = undefined) {
