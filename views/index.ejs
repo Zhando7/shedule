@@ -48,7 +48,7 @@
                         <% if(docs.length > 0) { %>
                             <li class="collection-header"><h4>Выберите месяц</h4></li>
                             <% docs.forEach(el => { %>
-                                <li onclick="findSelectMonth('calendar', '<%= el._id %>')" class="collection-item">
+                                <li onclick="calendar.findSelectMonth('calendar', '<%= el._id %>')" class="collection-item">
                                     <%= el.month.title %>
                                 </li>
                             <% }) %>
