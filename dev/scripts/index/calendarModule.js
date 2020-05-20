@@ -38,6 +38,11 @@ function CalendarModule() {
                 this.idDomElement = idDomElement;
             }
         },
+        findSelectMonth: function(idDomElement, idMonth) {
+            if(idDomElement && idMonth) {
+                this.requestMonth(idDomElement, idMonth);
+            }
+        },
         requestMonth: function(idDomElement, idMonth) {
             if(idDomElement && idMonth) {
                 let url = `/view/dates/${idMonth}`;
@@ -48,53 +53,61 @@ function CalendarModule() {
             }
         },
         prepareRequestMonth: function(docs) {
-            if(docs) {
+            if(docs.length > 0) {
                 this.showCalendar(docs);
             }
         },
         showCalendar: function(docs) {
-            document.getElementById("tableLessons").style.display = "none";
+            if(docs.length > 0) {
+                document.getElementById("tableLessons").style.display = "none";
 
-            var table = '<table class="striped centered"><thead><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th></tr></thead><tbody><tr>',
-                firstDay = new Date(docs[0].full_date).getDay(),
-                j = 0;
-            
-            /*
-            * Пробелы для первого ряда
-            * с понедельника до первого дня месяца
-            */
-            for( let i = 1; i < firstDay; i++ ) {
-                table += '<td></td>';
-            }
-
-            // <td> ячейки календаря с датами
-            while( j < docs.length ) {
-                if( new Date(docs[j].full_date).getDay() != 0 ) {
-                    table += this.initMonthCell(docs, j);
-                }
+                var table = '<table class="striped centered"><thead><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th></tr></thead><tbody><tr>',
+                    firstDay = new Date(docs[0].full_date).getDay(),
+                    j = 0;
                 
-                if( new Date(docs[j].full_date).getDay() == 6 && j < ( docs.length - 1)) {
-                    table += "</tr><tr>";   // новый ряд
+                /*
+                * Пробелы для первого ряда
+                * с понедельника до первого дня месяца
+                */
+                for( let i = 1; i < firstDay; i++ ) {
+                    table += '<td></td>';
                 }
-                
-                j++;
-            }
 
-            table += "</tr></tbody></table>";
-            document.getElementById(`${this.idDomElement}`).innerHTML = table;
-            document.getElementById(`${this.idDomElement}`).style.display = "block";
+                // <td> ячейки календаря с датами
+                while( j < docs.length ) {
+                    if( new Date(docs[j].full_date).getDay() != 0 ) {
+                        table += this.initMonthCell(docs, j);
+                    }
+                    
+                    if( new Date(docs[j].full_date).getDay() == 6 && j < ( docs.length - 1)) {
+                        table += "</tr><tr>";   // новый ряд
+                    }
+                    
+                    j++;
+                }
+
+                table += "</tr></tbody></table>";
+                document.getElementById(`${this.idDomElement}`).innerHTML = table;
+                document.getElementById(`${this.idDomElement}`).style.display = "block";
+            }
         },
         initMonthCell: function(docs, i) {
-            var attribId = `id="${docs[i]._id}"`,
-                attribOnClick = `onclick="getLessons('${docs[i]._id}')"`,
+            if(docs.length > 0) {
+                var attribId = `id="${docs[i]._id}"`,
+                attribOnClick = `onclick="calendar.getLessons('${docs[i]._id}')"`,
                 dateValue = new Date(docs[i].full_date).getDate(),
                 cell = `<td ${attribId} ${attribOnClick}>${dateValue}</td>`;
-
-            return cell;
+                return cell;
+            }   
         }
     }
 
     var LessonController = {
+        getLessons: function(idDate) {
+            if(idDate) {
+                this.requestLessons(idDate);
+            }
+        },
         requestLessons: function(idDate) {
             if(idDate && typeof idDate === "string") {
                 let url = `/view/lessons/${idDate}`;
@@ -110,7 +123,7 @@ function CalendarModule() {
             }
         },
         showTableLessons: function(docs) {
-            if(docs) {
+            if(docs.length > 0) {
                 var table = document.getElementById("tableLessons"),
                     start = `
                         <table class="striped centered">
@@ -149,11 +162,3 @@ function CalendarModule() {
 }
 
 var calendar = Object.create(CalendarModule());
-
-function findSelectMonth(idDomElement, idMonth) {
-    calendar.requestMonth(idDomElement, idMonth);
-}
-
-function getLessons(idDate) {
-    calendar.requestLessons(idDate);
-}
