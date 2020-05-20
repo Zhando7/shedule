@@ -4,7 +4,7 @@ const   User = require('../models/user'),
 
 exports.getIndex = async (req, res) => {
     try {
-        let checkAdmin = req.session.userId ? true : false,
+        let checkAdmin = (req.session.userId) ? true : false,
             year = new Date().getFullYear(),
             currentYear = await Shedule.Year.findOne({ year }),
             docs = await Shedule.Month.find({ id_year: currentYear });
@@ -16,31 +16,32 @@ exports.getIndex = async (req, res) => {
 }
 
 exports.logIn = (req, res) => {
-    let name = req.body.name;
-    
-    User.findOne({ name }, (err, doc) => {
-        if(err) throw err;
-        if(doc === null) {
-            return res.status(400).json({
-                msg: 'Пользователь с таким именем не найден'
-            });
-        }
-        else {
-            if(doc.validPassword(req.body.password)) {
-                req.session.userId = doc._id;
-                req.session.userLogin = doc.name;
-
-                return res.status(200).json({
-                    msg: 'Ok'
+    var name;
+    if(name = req.body.name) {
+        User.findOne({ name }, (err, doc) => {
+            if(err) throw err;
+            if(doc === null) {
+                return res.status(400).json({
+                    msg: 'Пользователь с таким именем не найден'
                 });
             }
             else {
-                return res.status(401).json({
-                    msg: 'Неправильный пароль'
-                });
+                if(doc.validPassword(req.body.password)) {
+                    req.session.userId = doc._id;
+                    req.session.userLogin = doc.name;
+
+                    return res.status(200).json({
+                        msg: 'Ok'
+                    });
+                }
+                else {
+                    return res.status(401).json({
+                        msg: 'Неправильный пароль'
+                    });
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 exports.logOut = (req, res) => {
