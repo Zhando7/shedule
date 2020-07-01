@@ -13,7 +13,7 @@ function AuthorizationModule() {
             user = user || this.getUser();
             pw = pw || this.getPassword();
     
-            if(!(user && pw)) {
+            if(user.length == 0 && pw.length == 0) {
                 return this.failure("Ошибка авторизации! ", "Пожалуйста, введите логин и пароль!");
             } else if(pw.length < 5) {
                 return this.failure("Ошибка авторизации! ", "Пароль должен содержать больше 5 символов!");

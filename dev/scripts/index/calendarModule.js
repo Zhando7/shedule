@@ -2,7 +2,7 @@ function CalendarModule() {
     var ServerController = {
         errors: [],
         server: function(url, trigger) {
-            if(url && trigger) {
+            if(this.checkValue(url) && trigger > 0) {
                 let xhr = new XMLHttpRequest();
                 
                 xhr.open("GET", url, true);
@@ -11,9 +11,9 @@ function CalendarModule() {
                     var json = JSON.parse(xhr.response);
 
                     if(xhr.readyState == 4 && xhr.status == 200) {
-                        if(trigger === 1) {
+                        if(trigger == 1) {
                             this.prepareRequestMonth(json.docs);
-                        } else if(trigger === 2) {
+                        } else if(trigger == 2) {
                             this.prepareRequestLessons(json.docs);
                         }
                     } else {
@@ -33,20 +33,25 @@ function CalendarModule() {
     };
 
     var MonthController = {
-        init: function(idDomElement) {
-            if(idDomElement) {
-                this.idDomElement = idDomElement;
+        checkValue(v) {
+            if(typeof v == 'string' && v.length > 0) {
+                return true;
+            } else {
+                return false;
             }
         },
+        init: function(idDomElement) {
+            this.idDomElement = idDomElement;
+        },
         findSelectMonth: function(idDomElement, idMonth) {
-            if(idDomElement && idMonth) {
+            if(this.checkValue(idDomElement) && this.checkValue(idMonth)) {
                 this.requestMonth(idDomElement, idMonth);
             }
         },
         requestMonth: function(idDomElement, idMonth) {
-            if(idDomElement && idMonth) {
+            if(this.checkValue(idDomElement) && this.checkValue(idMonth)) {
                 let url = `/view/dates/${idMonth}`;
-                if(!this.idDomElement) {
+                if(typeof this.idDomElement == 'undefined') {
                     this.init(idDomElement);
                 }
                 this.server(url, 1);
@@ -104,12 +109,12 @@ function CalendarModule() {
 
     var LessonController = {
         getLessons: function(idDate) {
-            if(idDate) {
+            if(this.checkValue(idDate)) {
                 this.requestLessons(idDate);
             }
         },
         requestLessons: function(idDate) {
-            if(idDate && typeof idDate === "string") {
+            if(this.checkValue(idDate)) {
                 let url = `/view/lessons/${idDate}`;
                 this.server(url, 2);
             }
