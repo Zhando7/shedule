@@ -4,7 +4,7 @@ const   User = require('../models/user'),
 exports.createAdmin = () => {
     User.find({name: conf.admin.name}, (err, doc) => {
         if(err) console.log(err);
-        if(doc.length === 0) {
+        if(doc.length == 0) {
             let admin = new User();
 
             admin.name = conf.admin.name;
@@ -25,9 +25,11 @@ exports.createAdmin = () => {
 }
 
 exports.checkReqBody = (req, res) => {
-    if(!req.body) return res.status(400).json({
-        msg: 'The request body is null'
-    });
+    if(Object.keys(req.body).length == 0) {
+        return res.status(400).json({
+            msg: 'The request body has not value!'
+        });
+    }
 }
 
 exports.sendResult = (res, docs, msg = 'Document has successfully created') => {
